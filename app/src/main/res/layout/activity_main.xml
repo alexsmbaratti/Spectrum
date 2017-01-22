@@ -11,17 +11,61 @@
     <android.support.percent.PercentFrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
+        android:background="@color/white"
+        android:elevation="4dp">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
-            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:orientation="vertical"
             app:layout_aspectRatio="178%"
             app:layout_widthPercent="100%"
             tools:context="com.techtalk4geeks.ibis.MainActivity">
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rgb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="RGB" />
+
+                <RadioButton
+                    android:id="@+id/hex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hex" />
+
+                <RadioButton
+                    android:id="@+id/hsl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="HSL" />
+
+                <RadioButton
+                    android:id="@+id/cmyk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CMYK" />
+
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="#FFFFFF"
+                android:inputType="textPersonName"
+                android:textAlignment="center"
+                android:textSize="60dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -34,7 +78,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="5dp"
-        android:paddingRight="5dp">
+        android:paddingRight="5dp"
+        android:paddingTop="5dp">
 
         <TextView
             android:layout_width="wrap_content"
