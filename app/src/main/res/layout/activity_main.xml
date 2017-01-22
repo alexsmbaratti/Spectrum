@@ -31,17 +31,17 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/rgb"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="RGB" />
-
-                <RadioButton
                     android:id="@+id/hex"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="Hex" />
+
+                <RadioButton
+                    android:id="@+id/rgb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="RGB" />
 
                 <RadioButton
                     android:id="@+id/hsl"

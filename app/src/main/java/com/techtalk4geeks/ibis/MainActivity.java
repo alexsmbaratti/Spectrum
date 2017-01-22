@@ -6,17 +6,55 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 public class MainActivity extends AppCompatActivity {
 
     TextWatcher tt = null;
     String editTextString;
+    RadioGroup group;
+    RadioButton rgb;
+    RadioButton hex;
+    RadioButton hsl;
+    RadioButton cmyk;
+
+    int radioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        radioButton = R.id.hex;
         final EditText et = (EditText) findViewById(R.id.editText);
+        group = (RadioGroup) findViewById(R.id.radioGroup);
+        rgb = (RadioButton) findViewById(R.id.rgb);
+        hex = (RadioButton) findViewById(R.id.hex);
+        hsl = (RadioButton) findViewById(R.id.hsl);
+        cmyk = (RadioButton) findViewById(R.id.cmyk);
+
+        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                switch (i) {
+                    case R.id.rgb:
+                        radioButton = R.id.rgb;
+                        break;
+                    case R.id.hex:
+                        radioButton = R.id.hex;
+                        break;
+                    case R.id.hsl:
+                        radioButton = R.id.hsl;
+                        break;
+                    case R.id.cmyk:
+                        radioButton = R.id.cmyk;
+                        break;
+                    default:
+                        radioButton = R.id.hex;
+                        break;
+                }
+            }
+        });
 
         tt = new TextWatcher() {
             @Override
@@ -31,10 +69,12 @@ public class MainActivity extends AppCompatActivity {
 
             public void afterTextChanged(Editable s) {
                 et.removeTextChangedListener(this);
-                if (!(editTextString.startsWith("#"))) {
-                    s.insert(0, "#");
-                } else {
-                    // Iterate through string and check for any extra hashtags
+                if (radioButton == R.id.hex) {
+                    if (!(editTextString.startsWith("#"))) {
+                        s.insert(0, "#");
+                    } else {
+                        // Iterate through string and check for any extra hashtags
+                    }
                 }
                 et.addTextChangedListener(this);
             }
