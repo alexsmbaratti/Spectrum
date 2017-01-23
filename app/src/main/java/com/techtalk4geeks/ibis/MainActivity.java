@@ -26,8 +26,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         radioButton = R.id.hex;
-        final EditText et = (EditText) findViewById(R.id.editText);
+        final EditText hexET = (EditText) findViewById(R.id.editText);
         group = (RadioGroup) findViewById(R.id.radioGroup);
+
+        // Potentially redundant code
+        // TODO: Reevaluate and remove if necessary
         rgb = (RadioButton) findViewById(R.id.rgb);
         hex = (RadioButton) findViewById(R.id.hex);
         hsl = (RadioButton) findViewById(R.id.hsl);
@@ -36,20 +39,28 @@ public class MainActivity extends AppCompatActivity {
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
+
+                // Use fragments to switch text fields?
+
                 switch (i) {
                     case R.id.rgb:
+                        log("RGB Radio Button Triggered");
                         radioButton = R.id.rgb;
                         break;
                     case R.id.hex:
+                        log("Hex Radio Button Triggered");
                         radioButton = R.id.hex;
                         break;
                     case R.id.hsl:
+                        log("HSL Radio Button Triggered");
                         radioButton = R.id.hsl;
                         break;
                     case R.id.cmyk:
+                        log("CMYK Radio Button Triggered");
                         radioButton = R.id.cmyk;
                         break;
                     default:
+                        logWTF("Default Case in Radio Button Switch Statement Triggered");
                         radioButton = R.id.hex;
                         break;
                 }
@@ -70,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             public void afterTextChanged(Editable s) {
-                et.removeTextChangedListener(this);
+                hexET.removeTextChangedListener(this);
                 if (radioButton == R.id.hex) {
                     if (!(editTextString.startsWith("#"))) {
                         s.insert(0, "#");
@@ -85,10 +96,10 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
-                et.addTextChangedListener(this);
+                hexET.addTextChangedListener(this);
             }
         };
-        et.addTextChangedListener(tt);
+        hexET.addTextChangedListener(tt);
     }
 
     public void log(String message) {
@@ -97,5 +108,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void logDebug(String message) {
         Log.d("Ibis", message);
+    }
+
+    public void logWTF(String message) {
+        Log.wtf("Ibis", message);
     }
 }
