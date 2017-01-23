@@ -19,6 +19,8 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true"
             android:orientation="vertical"
             app:layout_aspectRatio="178%"
             app:layout_widthPercent="100%"
@@ -61,9 +63,11 @@
                 android:id="@+id/editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:digits="#ABCDEFabcdef0123456789"
                 android:ems="10"
                 android:hint="#FFFFFF"
-                android:inputType="textPersonName"
+                android:inputType="textCapCharacters"
+                android:maxLength="9"
                 android:textAlignment="center"
                 android:textSize="60dp" />
 
