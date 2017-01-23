@@ -64,7 +64,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                log("onTextChanged triggered");
                 editTextString = charSequence.toString();
+                logDebug("editTextString = " + editTextString);
             }
 
             public void afterTextChanged(Editable s) {
@@ -72,8 +74,15 @@ public class MainActivity extends AppCompatActivity {
                 if (radioButton == R.id.hex) {
                     if (!(editTextString.startsWith("#"))) {
                         s.insert(0, "#");
+                        log("Added hashtag");
                     } else {
-                        // Iterate through string and check for any extra hashtags
+                        for (int i = 1; i < editTextString.length(); i++) {
+                            // Iterate through string and check for any extra hashtags
+                            if (editTextString.substring(i, i + 1).equals("#")) {
+                                s.delete(i, i + 1);
+                                log("Deleting extra hashtag");
+                            }
+                        }
                     }
                 }
                 et.addTextChangedListener(this);
@@ -84,5 +93,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void log(String message) {
         Log.i("Ibis", message);
+    }
+
+    public void logDebug(String message) {
+        Log.d("Ibis", message);
     }
 }
