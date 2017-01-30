@@ -95,4 +95,6 @@
     <string name="hello_hex_fragment">Hello Hex fragment</string>
     <string name="hello_hsl_fragment">Hello HSL fragment</string>
     <string name="hello_cmyk_fragment">Hello CMYK fragment</string>
+
+    <string name="blank_value_disclaimer">Blank values will default to zero.</string>
 </resources>
