@@ -10,4 +10,16 @@
         android:layout_height="match_parent"
         android:text="@string/hello_hex_fragment" />
 
+    <EditText
+        android:id="@+id/hexText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:digits="#ABCDEFabcdef0123456789"
+        android:ems="10"
+        android:hint="#FFFFFF"
+        android:inputType="textCapCharacters"
+        android:maxLength="9"
+        android:textAlignment="center"
+        android:textSize="60dp" />
+
 </FrameLayout>

@@ -59,24 +59,6 @@
 
             </RadioGroup>
 
-            <EditText
-                android:id="@+id/editText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:digits="#ABCDEFabcdef0123456789"
-                android:ems="10"
-                android:hint="#FFFFFF"
-                android:inputType="textCapCharacters"
-                android:maxLength="9"
-                android:textAlignment="center"
-                android:textSize="60dp" />
-
-            <fragment
-                android:id="@+id/fragment_place"
-                android:name="com.techtalk4geeks.ibis.HexFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
             <FrameLayout
                 android:id="@+id/fragment_frame_layout"
                 android:layout_width="match_parent"
