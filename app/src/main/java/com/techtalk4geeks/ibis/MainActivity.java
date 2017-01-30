@@ -1,5 +1,8 @@
 package com.techtalk4geeks.ibis;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -41,15 +44,18 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
 
                 // Use fragments to switch text fields?
+                Fragment fragment = null;
 
                 switch (i) {
                     case R.id.rgb:
                         log("RGB Radio Button Triggered");
                         radioButton = R.id.rgb;
+                        fragment = new RGBFragment();
                         break;
                     case R.id.hex:
                         log("Hex Radio Button Triggered");
                         radioButton = R.id.hex;
+                        fragment = new HexFragment();
                         break;
                     case R.id.hsl:
                         log("HSL Radio Button Triggered");
@@ -62,8 +68,14 @@ public class MainActivity extends AppCompatActivity {
                     default:
                         logWTF("Default Case in Radio Button Switch Statement Triggered");
                         radioButton = R.id.hex;
+                        fragment = new HexFragment();
                         break;
                 }
+
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_frame_layout, fragment);
+                fragmentTransaction.commit();
             }
         });
 

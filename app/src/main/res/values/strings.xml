@@ -91,5 +91,8 @@
     </string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_rgb_fragment">Hello RGB fragment</string>
+    <string name="hello_hex_fragment">Hello Hex fragment</string>
+    <string name="hello_hsl_fragment">Hello HSL fragment</string>
+    <string name="hello_cmyk_fragment">Hello CMYK fragment</string>
 </resources>
