@@ -97,4 +97,7 @@
     <string name="hello_cmyk_fragment">Hello CMYK fragment</string>
 
     <string name="blank_value_disclaimer">Blank values will default to zero.</string>
+    <string name="current_color">#FFFFFF</string>
+    <string name="title_activity_color">ColorActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>

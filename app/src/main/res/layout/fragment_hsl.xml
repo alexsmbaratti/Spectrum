@@ -11,39 +11,40 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/rText"
+            android:id="@+id/hText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="255"
+            android:hint="360"
             android:imeOptions="actionNext"
             android:inputType="number"
             android:maxLength="3"
-            android:nextFocusForward="@+id/gText"
+            android:nextFocusForward="@+id/sText"
             android:textAlignment="center"
-            android:textSize="60dp" />
+            android:textSize="50dp" />
 
         <EditText
-            android:id="@+id/gText"
+            android:id="@+id/sText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="255"
+            android:hint="100%"
             android:imeOptions="actionNext"
             android:inputType="number"
             android:maxLength="3"
-            android:nextFocusForward="@+id/bText"
+            android:nextFocusForward="@+id/lText"
             android:textAlignment="center"
-            android:textSize="60dp" />
+            android:textSize="50dp" />
 
         <EditText
-            android:id="@+id/bText"
+            android:id="@+id/lText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="255"
+            android:hint="100%"
             android:imeOptions="actionGo"
             android:inputType="number"
             android:maxLength="3"
             android:textAlignment="center"
-            android:textSize="60dp" />
+            android:textSize="50dp" />
+
     </LinearLayout>
 
     <TextView

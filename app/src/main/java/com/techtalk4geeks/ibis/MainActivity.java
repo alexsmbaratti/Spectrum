@@ -3,9 +3,12 @@ package com.techtalk4geeks.ibis;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -42,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
 
-                // Use fragments to switch text fields?
                 Fragment fragment = null;
 
                 switch (i) {
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.hsl:
                         log("HSL Radio Button Triggered");
                         radioButton = R.id.hsl;
+                        fragment = new HSLFragment();
                         break;
                     case R.id.cmyk:
                         log("CMYK Radio Button Triggered");
@@ -77,6 +80,29 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.commit();
             }
         });
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.colordetail) {
+            String demoColor = "#fbc69a";
+            Intent colorIntent = new Intent(this, ColorDetailActivity.class);
+            colorIntent.putExtra("color", demoColor);
+            startActivity(colorIntent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void log(String message) {

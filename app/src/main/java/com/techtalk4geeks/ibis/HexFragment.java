@@ -1,32 +1,43 @@
 package com.techtalk4geeks.ibis;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class HexFragment extends Fragment {
 
     TextWatcher tt = null;
     String editTextString;
+    Context context;
+
+    EditText hexET;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(
-                R.layout.fragment_hex, container, false);
+        context = container.getContext();
+
+        View v = inflater.inflate(R.layout.fragment_hex, container, false);
+
+        hexET = (EditText) v.findViewById(R.id.hexText);
+
+        return v;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        final EditText hexET = (EditText) getView().findViewById(R.id.hexText);
 
         tt = new TextWatcher() {
             @Override
@@ -58,6 +69,41 @@ public class HexFragment extends Fragment {
             }
         };
         hexET.addTextChangedListener(tt);
+
+        hexET.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                log("keyCode = " + keyCode);
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    Log.i("Ibis", "Enter");
+                    Intent colorIntent = new Intent(context, ColorDetailActivity.class);
+                    colorIntent.putExtra("color", hexET.getText());
+                    startActivity(colorIntent);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        hexET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((actionId == EditorInfo.IME_ACTION_DONE) || ((event.getKeyCode() == KeyEvent.KEYCODE_ENTER) && (event.getAction() == KeyEvent.ACTION_DOWN))) {
+                    Log.i("Ibis", "Enter");
+                    Intent colorIntent = new Intent(context, ColorDetailActivity.class);
+                    colorIntent.putExtra("color", hexET.getText());
+                    startActivity(colorIntent);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+    }
+
+    public Boolean isValid(String hex) {
+        return false;
     }
 
     public void log(String message) {
