@@ -67,6 +67,12 @@
 
     </android.support.percent.PercentFrameLayout>
 
+    <com.techtalk4geeks.ibis.TicketView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/large_text"
+        app:color="@color/colorPrimary" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
