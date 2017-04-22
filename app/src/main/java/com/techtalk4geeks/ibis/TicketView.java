@@ -3,6 +3,7 @@ package com.techtalk4geeks.ibis;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
@@ -14,7 +15,9 @@ import android.view.View;
 public class TicketView extends View {
     private Paint mTextPaint;
     private String mText;
-    private int mAscent;
+
+    private int parentHeight;
+    private int parentWidth;
 
     public TicketView(Context context) {
         super(context);
@@ -94,13 +97,18 @@ public class TicketView extends View {
     }
 
     private int measureHeight(int measureSpec) {
-        int parentWidth = MeasureSpec.getSize(measureSpec);
-        return parentWidth / 4;
+        parentWidth = MeasureSpec.getSize(measureSpec);
+        parentHeight = parentWidth / 4;
+        return parentHeight;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawText(mText, getPaddingLeft(), getPaddingTop() - mAscent, mTextPaint);
+
+        float textHeight = mTextPaint.ascent();
+        canvas.drawText(mText, getPaddingLeft(), (parentHeight - textHeight) / 2, mTextPaint);
+        mTextPaint.setColor(Color.BLACK);
+        canvas.drawRect(parentWidth * 0.75f, 0, parentWidth, parentHeight, mTextPaint);
     }
 }
