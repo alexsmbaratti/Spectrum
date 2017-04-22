@@ -52,7 +52,7 @@ public class TicketView extends View {
         // Must manually scale the desired text size to match screen density
         mTextPaint.setTextSize(16 * getResources().getDisplayMetrics().density);
         mTextPaint.setColor(0xFF000000);
-        setPadding(3, 3, 3, 3);
+//        setPadding(3, 3, 3, 3);
     }
 
     public void setText(String text) {
@@ -97,7 +97,7 @@ public class TicketView extends View {
     }
 
     private int measureHeight(int measureSpec) {
-        parentWidth = MeasureSpec.getSize(measureSpec);
+        parentWidth = MeasureSpec.getSize(measureSpec) - getPaddingRight();
         parentHeight = parentWidth / 4;
         return parentHeight;
     }
@@ -109,7 +109,7 @@ public class TicketView extends View {
         float textHeight = mTextPaint.ascent();
         mTextPaint.setColor(Color.BLACK);
         canvas.drawText(mText, getPaddingLeft(), (parentHeight - textHeight) / 2, mTextPaint);
-        mTextPaint.setColor(Color.WHITE);
+        mTextPaint.setColor(Color.parseColor("#FBC69A")); // Box color
         canvas.drawRect(parentWidth * 0.75f, 0, parentWidth, parentHeight, mTextPaint);
         mTextPaint.setColor(Color.GRAY);
         canvas.drawLine(parentWidth * 0.75f, 0, parentWidth * 0.75f, parentHeight, mTextPaint);
