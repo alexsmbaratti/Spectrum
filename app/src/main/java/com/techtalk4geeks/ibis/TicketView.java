@@ -107,8 +107,11 @@ public class TicketView extends View {
         super.onDraw(canvas);
 
         float textHeight = mTextPaint.ascent();
-        canvas.drawText(mText, getPaddingLeft(), (parentHeight - textHeight) / 2, mTextPaint);
         mTextPaint.setColor(Color.BLACK);
+        canvas.drawText(mText, getPaddingLeft(), (parentHeight - textHeight) / 2, mTextPaint);
+        mTextPaint.setColor(Color.WHITE);
         canvas.drawRect(parentWidth * 0.75f, 0, parentWidth, parentHeight, mTextPaint);
+        mTextPaint.setColor(Color.GRAY);
+        canvas.drawLine(parentWidth * 0.75f, 0, parentWidth * 0.75f, parentHeight, mTextPaint);
     }
 }
