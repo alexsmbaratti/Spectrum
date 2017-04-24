@@ -12,6 +12,8 @@ public class ColorDetailActivity extends AppCompatActivity {
     String color;
     Color c;
 
+    String format;
+
     LinearLayout colorLayout;
     TextView colorText;
 
@@ -27,34 +29,51 @@ public class ColorDetailActivity extends AppCompatActivity {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
                 color = "#FFFFFF";
+                format = "HEX";
             } else {
                 color = extras.getString("color");
+                format = extras.getString("format");
             }
         } else {
             color = (String) savedInstanceState.getSerializable("color");
+            format = (String) savedInstanceState.getSerializable("format");
         }
 
         log("ColorDetailActivity received extra color with value " + color);
 
-        colorLayout.setBackgroundColor((Color.parseColor(color)));
-        colorText.setText(color.toUpperCase());
-
         int colorInt;
 
         String parsableColor;
+        int r = 0;
+        int g = 0;
+        int b = 0;
 
-        if (color.charAt(0) == '#') {
-            parsableColor = color.substring(1);
-        } else {
-            parsableColor = color;
+        switch (format) {
+            case "HEX":
+                colorLayout.setBackgroundColor((Color.parseColor(color)));
+                colorText.setText(color.toUpperCase());
+
+                if (color.charAt(0) == '#') {
+                    parsableColor = color.substring(1);
+                } else {
+                    parsableColor = color;
+                }
+                colorInt = (int) Long.parseLong(parsableColor, 16);
+                r = (colorInt >> 16) & 0xFF;
+                g = (colorInt >> 8) & 0xFF;
+                b = (colorInt >> 0) & 0xFF;
+
+                // TODO: Ensure that demo still works
+
+                break;
+            case "RGB":
+                // TODO: Add more formats
+                break;
+            default:
         }
-        colorInt = (int) Long.parseLong(parsableColor, 16);
-        int r = (colorInt >> 16) & 0xFF;
-        int g = (colorInt >> 8) & 0xFF;
-        int b = (colorInt >> 0) & 0xFF;
+
 
         int textColor;
-
         if ((r * 0.299 + g * 0.587 + b * 0.114) > 186) {
             textColor = Color.BLACK;
         } else {

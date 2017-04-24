@@ -93,6 +93,7 @@ public class HexFragment extends Fragment {
                     Log.i("Ibis", "Enter");
                     Intent colorIntent = new Intent(context, ColorDetailActivity.class);
                     colorIntent.putExtra("color", hexET.getText());
+                    colorIntent.putExtra("format", "HEX");
                     startActivity(colorIntent);
                     return true;
                 } else {

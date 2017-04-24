@@ -16,7 +16,7 @@ import android.view.View;
  */
 
 public class TicketView extends View {
-    private Paint mTextPaint;
+    private Paint mPaint;
     private String mText;
 
     private int parentHeight;
@@ -51,12 +51,21 @@ public class TicketView extends View {
         a.recycle();
     }
 
+    public TicketView(Context context, int color) {
+        super(context);
+        initTicketView();
+
+        this.color = color;
+
+        // TODO: Complete constructor
+    }
+
     private void initTicketView() {
-        mTextPaint = new Paint();
-        mTextPaint.setAntiAlias(true);
+        mPaint = new Paint();
+        mPaint.setAntiAlias(true);
         // Must manually scale the desired text size to match screen density
-        mTextPaint.setTextSize(16 * getResources().getDisplayMetrics().density);
-        mTextPaint.setColor(0xFF000000);
+        mPaint.setTextSize(16 * getResources().getDisplayMetrics().density);
+        mPaint.setColor(0xFF000000);
 //        setPadding(3, 3, 3, 3);
     }
 
@@ -67,13 +76,13 @@ public class TicketView extends View {
     }
 
     public void setTextSize(int size) {
-        mTextPaint.setTextSize(size);
+        mPaint.setTextSize(size);
         requestLayout();
         invalidate();
     }
 
     public void setTextColor(int color) {
-        mTextPaint.setColor(color);
+        mPaint.setColor(color);
         invalidate();
     }
 
@@ -95,7 +104,7 @@ public class TicketView extends View {
         if (specMode == MeasureSpec.EXACTLY) {
             result = specSize;
         } else {
-            result = (int) mTextPaint.measureText(mText) + getPaddingLeft()
+            result = (int) mPaint.measureText(mText) + getPaddingLeft()
                     + getPaddingRight();
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
@@ -115,23 +124,25 @@ public class TicketView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        float textHeight = mTextPaint.ascent();
-        mTextPaint.setColor(Color.WHITE);
-        canvas.drawRect(getPaddingLeft(), getPaddingTop(), parentWidth, parentHeight, mTextPaint);
-        mTextPaint.setColor(Color.BLACK);
-        canvas.drawText(mText, getPaddingLeft(), (parentHeight - textHeight) / 2, mTextPaint);
+        float textHeight = mPaint.ascent();
+        mPaint.setColor(Color.WHITE);
+        canvas.drawRect(getPaddingLeft(), getPaddingTop(), parentWidth, parentHeight, mPaint);
+        mPaint.setColor(Color.BLACK);
+        canvas.drawText(mText, getPaddingLeft(), (parentHeight - textHeight) / 2, mPaint);
         try {
-            mTextPaint.setColor(Color.parseColor(mText)); // Box color
+            mPaint.setColor(Color.parseColor(mText)); // Box color
         } catch (IllegalArgumentException e) {
             Log.e("Ibis", "Color could not be parsed!");
             Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.error);
+            canvas.drawBitmap(b, parentWidth * 0.75f, 0, mPaint); // TODO: Check if bitmap drawing works
         }
-        canvas.drawRect(parentWidth * 0.75f, 0, parentWidth, parentHeight, mTextPaint);
-        mTextPaint.setColor(Color.GRAY);
-        canvas.drawLine(parentWidth * 0.75f, 0, parentWidth * 0.75f, parentHeight, mTextPaint);
-        canvas.drawLine(getPaddingLeft(), 0, parentWidth, 0, mTextPaint);
-        canvas.drawLine(getPaddingLeft(), parentHeight, parentWidth, parentHeight, mTextPaint);
-        canvas.drawLine(getPaddingLeft(), parentHeight, getPaddingLeft(), 0, mTextPaint);
-        canvas.drawLine(parentWidth, parentHeight, parentWidth, 0, mTextPaint);
+        canvas.drawRect(parentWidth * 0.75f, 0, parentWidth, parentHeight, mPaint);
+        mPaint.setColor(Color.GRAY);
+        canvas.drawLine(parentWidth * 0.75f, 0, parentWidth * 0.75f, parentHeight, mPaint);
+        canvas.drawLine(getPaddingLeft(), 0, parentWidth, 0, mPaint);
+        canvas.drawLine(getPaddingLeft(), parentHeight, parentWidth, parentHeight, mPaint);
+        canvas.drawLine(getPaddingLeft(), parentHeight, getPaddingLeft(), 0, mPaint);
+        canvas.drawLine(parentWidth, parentHeight, parentWidth, 0, mPaint);
     }
+    // TODO: Work on adjusting padding
 }
