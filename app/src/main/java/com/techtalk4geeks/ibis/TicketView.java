@@ -2,10 +2,13 @@ package com.techtalk4geeks.ibis;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -117,7 +120,12 @@ public class TicketView extends View {
         canvas.drawRect(getPaddingLeft(), getPaddingTop(), parentWidth, parentHeight, mTextPaint);
         mTextPaint.setColor(Color.BLACK);
         canvas.drawText(mText, getPaddingLeft(), (parentHeight - textHeight) / 2, mTextPaint);
-        mTextPaint.setColor(color); // Box color
+        try {
+            mTextPaint.setColor(Color.parseColor(mText)); // Box color
+        } catch (IllegalArgumentException e) {
+            Log.e("Ibis", "Color could not be parsed!");
+            Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.error);
+        }
         canvas.drawRect(parentWidth * 0.75f, 0, parentWidth, parentHeight, mTextPaint);
         mTextPaint.setColor(Color.GRAY);
         canvas.drawLine(parentWidth * 0.75f, 0, parentWidth * 0.75f, parentHeight, mTextPaint);
