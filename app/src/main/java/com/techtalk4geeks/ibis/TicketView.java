@@ -19,6 +19,8 @@ public class TicketView extends View {
     private int parentHeight;
     private int parentWidth;
 
+    private int color = Color.parseColor("#FBC69A"); // Default color
+
     public TicketView(Context context) {
         super(context);
         initTicketView();
@@ -72,6 +74,10 @@ public class TicketView extends View {
         invalidate();
     }
 
+    public void setColor(int color) {
+        this.color = color;
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(measureWidth(widthMeasureSpec),
@@ -111,7 +117,7 @@ public class TicketView extends View {
         canvas.drawRect(getPaddingLeft(), getPaddingTop(), parentWidth, parentHeight, mTextPaint);
         mTextPaint.setColor(Color.BLACK);
         canvas.drawText(mText, getPaddingLeft(), (parentHeight - textHeight) / 2, mTextPaint);
-        mTextPaint.setColor(Color.parseColor("#FBC69A")); // Box color
+        mTextPaint.setColor(color); // Box color
         canvas.drawRect(parentWidth * 0.75f, 0, parentWidth, parentHeight, mTextPaint);
         mTextPaint.setColor(Color.GRAY);
         canvas.drawLine(parentWidth * 0.75f, 0, parentWidth * 0.75f, parentHeight, mTextPaint);
