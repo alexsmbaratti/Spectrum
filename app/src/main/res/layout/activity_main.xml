@@ -67,26 +67,19 @@
 
     </android.support.percent.PercentFrameLayout>
 
-    <com.techtalk4geeks.ibis.TicketView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:text="#FBC69A"
-        android:textSize="48dp"
-        app:color="@color/colorPrimary" />
-
     <ScrollView
+        android:id="@+id/mainScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="5dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/ticketLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/large_text" />
+            android:orientation="vertical" />
     </ScrollView>
 
 </LinearLayout>

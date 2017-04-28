@@ -9,8 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     RadioButton hex;
     RadioButton hsl;
     RadioButton cmyk;
+    ScrollView scrollView;
+    LinearLayout ticketLayout;
 
     int radioButton;
 
@@ -28,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         radioButton = R.id.hex;
         group = (RadioGroup) findViewById(R.id.radioGroup);
+        scrollView = (ScrollView) findViewById(R.id.mainScrollView);
+        ticketLayout = (LinearLayout) findViewById(R.id.ticketLayout);
 
         // Potentially redundant code
         // TODO: Reevaluate and remove if necessary
@@ -81,6 +90,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        if (BuildConfig.DEBUG) {
+            Toast.makeText(this, "This is a development build", Toast.LENGTH_SHORT).show();
+            ArrayList<TicketView> ticketList = new ArrayList<>();
+            TicketView ticket1 = new TicketView(this, "#FBC69A");
+            TicketView ticket2 = new TicketView(this, "#8AB32F");
+            TicketView ticket3 = new TicketView(this, "#3300FF");
+
+            ticketList.add(0, ticket1);
+            ticketList.add(1, ticket2);
+            ticketList.add(2, ticket3);
+
+            for (int i = 0; i < ticketList.size(); i++) {
+                ticketLayout.addView(ticketList.get(i));
+            }
+        }
 
     }
 
@@ -98,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
             String demoColor = "#fbc69a";
             Intent colorIntent = new Intent(this, ColorDetailActivity.class);
             colorIntent.putExtra("color", demoColor);
+            colorIntent.putExtra("format", "HEX");
             startActivity(colorIntent);
             return true;
         }
