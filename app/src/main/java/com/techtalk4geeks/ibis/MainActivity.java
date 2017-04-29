@@ -7,12 +7,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
+import android.widget.Space;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -92,16 +95,25 @@ public class MainActivity extends AppCompatActivity {
 
         if (BuildConfig.DEBUG) {
             Toast.makeText(this, "This is a development build", Toast.LENGTH_SHORT).show();
-            ArrayList<TicketView> ticketList = new ArrayList<>();
+            ArrayList<View> ticketList = new ArrayList<>();
             TicketView ticket1 = new TicketView(this, "#FBC69A");
-            TicketView ticket2 = new TicketView(this, "#8AB32F");
+            TicketView ticket2 = new TicketView(this, "#77C8C6");
             TicketView ticket3 = new TicketView(this, "#3300FF");
 
-            ticketList.add(0, ticket1);
-            ticketList.add(1, ticket2);
-            ticketList.add(2, ticket3);
+            CollectionView collection1 = new CollectionView(this, "My Collection");
+
+            Space space = new Space(this);
+            space.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics()));
+
+            ticketList.add(ticket1);
+            ticketList.add(ticket2);
+            ticketList.add(ticket3);
+            ticketList.add(collection1);
+
+            ticketList.add(space);
 
             for (int i = 0; i < ticketList.size(); i++) {
+                ticketList.get(i).setElevation((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics()));
                 ticketLayout.addView(ticketList.get(i));
             }
         }

@@ -3,8 +3,6 @@ package com.techtalk4geeks.ibis;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -17,25 +15,23 @@ import android.view.View;
  * Created by alex on 4/22/17.
  */
 
-public class TicketView extends View implements View.OnClickListener {
-    String colorString;
+public class CollectionView extends View implements View.OnClickListener {
     Context context;
     private Paint mPaint;
     private String mText;
     private int parentHeight;
     private int parentWidth;
-    private int color; // Default color
     private float textWidth;
     private float textHeight;
 
-    public TicketView(Context context) {
+    public CollectionView(Context context) {
         super(context);
         this.context = context;
         initTicketView();
         setOnClickListener(this);
     }
 
-    public TicketView(Context context, AttributeSet attrs) {
+    public CollectionView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         initTicketView();
@@ -60,7 +56,7 @@ public class TicketView extends View implements View.OnClickListener {
         a.recycle();
     }
 
-    public TicketView(Context context, String colorString) {
+    public CollectionView(Context context, String collectionName) {
         super(context);
         this.context = context;
         initTicketView();
@@ -68,7 +64,7 @@ public class TicketView extends View implements View.OnClickListener {
         float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources().getDisplayMetrics());
 
         setTextSize((int) pixels);
-        setText(colorString);
+        setText(collectionName);
         setOnClickListener(this);
         // TODO: Complete constructor
     }
@@ -86,8 +82,6 @@ public class TicketView extends View implements View.OnClickListener {
 
     public void setText(String text) {
         mText = text;
-        colorString = text;
-        color = Color.parseColor(colorString);
         requestLayout();
         invalidate();
     }
@@ -114,8 +108,6 @@ public class TicketView extends View implements View.OnClickListener {
         Log.d("Ibis", "TicketView clicked");
 
         Intent colorIntent = new Intent(context, ColorDetailActivity.class);
-        colorIntent.putExtra("color", colorString);
-        colorIntent.putExtra("format", "HEX");
         context.startActivity(colorIntent);
     }
 
@@ -141,16 +133,8 @@ public class TicketView extends View implements View.OnClickListener {
 
     private int measureHeight(int measureSpec) {
         parentWidth = MeasureSpec.getSize(measureSpec) - getPaddingRight();
-        parentHeight = parentWidth / 4;
+        parentHeight = parentWidth / 3;
         return parentHeight;
-    }
-
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
     }
 
     @Override
@@ -163,28 +147,21 @@ public class TicketView extends View implements View.OnClickListener {
         canvas.drawRect(getPaddingLeft(), getPaddingTop(), parentWidth, parentHeight, mPaint);
         mPaint.setColor(Color.BLACK);
 
-        float labelWidth = parentWidth * 0.75f;
         textWidth = (int) mPaint.measureText(mText);
         textHeight = mPaint.ascent();
+        final float labelHeight = 2.2f / 3;
 
-        canvas.drawText(mText, (labelWidth - textWidth) / 2, (parentHeight - textHeight) / 2, mPaint);
-        try {
-            mPaint.setColor(Color.parseColor(colorString)); // Box color
-            canvas.drawRect(labelWidth, getPaddingTop(), parentWidth, parentHeight, mPaint);
-        } catch (NullPointerException e) {
-            mPaint.setColor(Color.parseColor("#FBC69A"));
-            canvas.drawRect(labelWidth, getPaddingTop(), parentWidth, parentHeight, mPaint);
-        } catch (IllegalArgumentException e) {
-            Log.e("Ibis", "Color could not be parsed!");
-            Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.error);
-            canvas.drawBitmap(b, labelWidth, 0.5f, mPaint); // TODO: Check if bitmap drawing works
-        }
+        canvas.drawText(mText, (parentWidth - textWidth) / 2, (parentHeight * labelHeight - textHeight) / 2, mPaint);
         mPaint.setColor(Color.GRAY);
-        canvas.drawLine(labelWidth, getPaddingTop(), labelWidth, parentHeight, mPaint);
         canvas.drawLine(getPaddingLeft(), getPaddingTop(), parentWidth, getPaddingTop(), mPaint);
         canvas.drawLine(getPaddingLeft(), parentHeight, parentWidth, parentHeight, mPaint);
         canvas.drawLine(getPaddingLeft(), parentHeight, getPaddingLeft(), getPaddingTop(), mPaint);
         canvas.drawLine(parentWidth, parentHeight, parentWidth, getPaddingTop(), mPaint);
+        canvas.drawLine(getPaddingLeft(), parentHeight * labelHeight, parentWidth, parentHeight * labelHeight, mPaint);
+
+        for (int i = 1; i < 10; i++) {
+            canvas.drawLine(parentWidth * 0.1f * i, parentHeight * labelHeight, parentWidth * 0.1f * i, parentHeight, mPaint);
+        }
 
         parentHeight -= getPaddingTop();
     }

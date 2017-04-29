@@ -22,9 +22,11 @@
             android:descendantFocusability="beforeDescendants"
             android:focusableInTouchMode="true"
             android:orientation="vertical"
-            app:layout_aspectRatio="178%"
+            app:layout_aspectRatio="250%"
             app:layout_widthPercent="100%"
             tools:context="com.techtalk4geeks.ibis.MainActivity">
+
+            <!-- For 16:9 aspect Ratio, change to 178% as needed -->
 
             <RadioGroup
                 android:id="@+id/radioGroup"
