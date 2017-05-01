@@ -11,6 +11,7 @@ public class ColorDetailActivity extends AppCompatActivity {
 
     String color;
     Color c;
+    String colorName;
 
     String format;
 
@@ -30,16 +31,28 @@ public class ColorDetailActivity extends AppCompatActivity {
             if (extras == null) {
                 color = "#FFFFFF";
                 format = "HEX";
+                colorName = "";
+                Log.e("Ibis", "No extras found! Using default values.");
             } else {
                 color = extras.getString("color");
                 format = extras.getString("format");
+                colorName = extras.getString("name");
             }
         } else {
             color = (String) savedInstanceState.getSerializable("color");
             format = (String) savedInstanceState.getSerializable("format");
+            colorName = (String) savedInstanceState.getSerializable("name");
+
+            // TODO: Implement colorName
         }
 
-        log("ColorDetailActivity received extra color with value " + color);
+        log("ColorDetailActivity received extra color with value " + color + " in format " + format + " and with description " + colorName);
+
+        if (!(getTitle().toString().isEmpty())) {
+            setTitle(colorName);
+        } else if (getTitle().toString().equals("")) {
+            setTitle(color);
+        }
 
         int colorInt;
 
@@ -71,7 +84,6 @@ public class ColorDetailActivity extends AppCompatActivity {
                 break;
             default:
         }
-
 
         int textColor;
         if ((r * 0.299 + g * 0.587 + b * 0.114) > 186) {

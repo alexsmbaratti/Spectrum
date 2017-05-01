@@ -11,6 +11,8 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
+import java.util.ArrayList;
+
 /**
  * Created by alex on 4/22/17.
  */
@@ -24,17 +26,19 @@ public class CollectionView extends View implements View.OnClickListener {
     private float textWidth;
     private float textHeight;
 
+    private ArrayList<TicketView> colors;
+
     public CollectionView(Context context) {
         super(context);
         this.context = context;
-        initTicketView();
+        initCollectionView();
         setOnClickListener(this);
     }
 
     public CollectionView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-        initTicketView();
+        initCollectionView();
 
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.TicketView);
@@ -59,7 +63,7 @@ public class CollectionView extends View implements View.OnClickListener {
     public CollectionView(Context context, String collectionName) {
         super(context);
         this.context = context;
-        initTicketView();
+        initCollectionView();
 
         float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources().getDisplayMetrics());
 
@@ -69,15 +73,21 @@ public class CollectionView extends View implements View.OnClickListener {
         // TODO: Complete constructor
     }
 
-    private void initTicketView() {
+    private void initCollectionView() {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         // Must manually scale the desired text size to match screen density
         mPaint.setTextSize(16 * getResources().getDisplayMetrics().density);
         mPaint.setColor(0xFF000000);
 
+        colors = new ArrayList<>();
+
         int pixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
 //        setPadding(pixels, pixels, pixels, pixels);
+    }
+
+    public void addColor(TicketView color) {
+        colors.add(color);
     }
 
     public void setText(String text) {
@@ -162,6 +172,17 @@ public class CollectionView extends View implements View.OnClickListener {
         for (int i = 1; i < 10; i++) {
             canvas.drawLine(parentWidth * 0.1f * i, parentHeight * labelHeight, parentWidth * 0.1f * i, parentHeight, mPaint);
         }
+
+        //        for (int i = 1; i < 10; i++) {
+//            try {
+//                mPaint.setColor(colors.get(i).getColor());
+//                canvas.drawRect(parentWidth * 0.1f * i, parentHeight * labelHeight, parentWidth * 0.1f * i, parentHeight, mPaint);
+//            } catch (ArrayIndexOutOfBoundsException e) {
+//                break;
+//
+//                // TODO: Fully implement
+//            }
+//        }
 
         parentHeight -= getPaddingTop();
     }

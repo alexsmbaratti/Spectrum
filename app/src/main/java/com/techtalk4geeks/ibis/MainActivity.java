@@ -97,8 +97,10 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "This is a development build", Toast.LENGTH_SHORT).show();
             ArrayList<View> ticketList = new ArrayList<>();
             TicketView ticket1 = new TicketView(this, "#FBC69A");
-            TicketView ticket2 = new TicketView(this, "#77C8C6");
-            TicketView ticket3 = new TicketView(this, "#3300FF");
+            TicketView ticket2 = new TicketView(this, "#BBE3ED");
+            TicketView ticket3 = new TicketView(this, "#86D0CF");
+
+            ticket1.setColorName("Rosalina's Hair");
 
             CollectionView collection1 = new CollectionView(this, "My Collection");
 

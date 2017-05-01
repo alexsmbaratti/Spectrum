@@ -27,6 +27,7 @@ public class TicketView extends View implements View.OnClickListener {
     private int color; // Default color
     private float textWidth;
     private float textHeight;
+    private String colorName = "";
 
     public TicketView(Context context) {
         super(context);
@@ -104,6 +105,10 @@ public class TicketView extends View implements View.OnClickListener {
         invalidate();
     }
 
+    public void setColorName(String colorName) {
+        this.colorName = colorName;
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(measureWidth(widthMeasureSpec),
@@ -116,6 +121,7 @@ public class TicketView extends View implements View.OnClickListener {
         Intent colorIntent = new Intent(context, ColorDetailActivity.class);
         colorIntent.putExtra("color", colorString);
         colorIntent.putExtra("format", "HEX");
+        colorIntent.putExtra("name", colorName);
         context.startActivity(colorIntent);
     }
 
