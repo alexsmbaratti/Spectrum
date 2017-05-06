@@ -3,6 +3,7 @@ package com.techtalk4geeks.ibis;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,6 +15,9 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 public class HexFragment extends Fragment {
 
@@ -66,45 +70,33 @@ public class HexFragment extends Fragment {
                     }
                 }
                 hexET.addTextChangedListener(this);
+                hexET.requestFocus();
             }
         };
         hexET.addTextChangedListener(tt);
 
-        hexET.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                // If the event is a key-down event on the "enter" button
-                log("keyCode = " + keyCode);
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    Log.i("Ibis", "Enter");
-                    Intent colorIntent = new Intent(context, ColorDetailActivity.class);
-                    colorIntent.putExtra("color", hexET.getText());
-                    startActivity(colorIntent);
-                    return true;
-                }
-                return false;
-            }
-        });
-
         hexET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((actionId == EditorInfo.IME_ACTION_DONE) || ((event.getKeyCode() == KeyEvent.KEYCODE_ENTER) && (event.getAction() == KeyEvent.ACTION_DOWN))) {
-                    Log.i("Ibis", "Enter");
-                    Intent colorIntent = new Intent(context, ColorDetailActivity.class);
-                    colorIntent.putExtra("color", hexET.getText());
-                    colorIntent.putExtra("format", "HEX");
-                    startActivity(colorIntent);
-                    return true;
-                } else {
-                    return false;
+
+                boolean handled = false;
+
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    hexET.requestFocus();
+                    if (verifyHEX(hexET.getText())) {
+                        Log.i("Ibis", "Enter handled");
+                        Intent colorIntent = new Intent(context, ColorDetailActivity.class);
+                        Log.d("Ibis", "Putting color as " + hexET.getText().toString());
+                        colorIntent.putExtra("color", hexET.getText().toString());
+                        colorIntent.putExtra("format", "HEX");
+                        startActivity(colorIntent);
+
+                        handled = true;
+                    }
                 }
+                return handled;
             }
         });
-    }
-
-    public Boolean isValid(String hex) {
-        return false;
     }
 
     public void log(String message) {
@@ -115,7 +107,25 @@ public class HexFragment extends Fragment {
         Log.d("Ibis", message);
     }
 
+    public void logError(String message) {
+        Log.e("Ibis", message);
+    }
+
     public void logWTF(String message) {
         Log.wtf("Ibis", message);
+    }
+
+    public Boolean verifyHEX(Editable hex) {
+        log("Verifying " + hex.toString());
+        try {
+            int color = Color.parseColor(hex.toString());
+        } catch (IllegalArgumentException e) {
+            logError(hex + " is not a valid HEX code.");
+            Toast.makeText(context, hex + " is not a valid HEX code.", LENGTH_SHORT).show();
+            // TODO: Find way to request focus
+            return false;
+        }
+        log(hex + " is a valid HEX code.");
+        return true;
     }
 }

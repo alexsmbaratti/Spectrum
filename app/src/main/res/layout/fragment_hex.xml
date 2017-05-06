@@ -11,10 +11,10 @@
         android:digits="#ABCDEFabcdef0123456789"
         android:ems="10"
         android:hint="#FFFFFF"
-        android:imeOptions="actionDone"
+        android:imeOptions="actionNext"
         android:inputType="textCapCharacters"
-        android:lines="1"
         android:maxLength="7"
+        android:singleLine="true"
         android:textAlignment="center"
         android:textSize="60dp" />
 

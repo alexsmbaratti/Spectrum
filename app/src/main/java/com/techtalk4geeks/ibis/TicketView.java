@@ -82,7 +82,7 @@ public class TicketView extends View implements View.OnClickListener {
         mPaint.setColor(0xFF000000);
 
         int pixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
-//        setPadding(pixels, pixels, pixels, pixels);
+        setPadding(0, pixels, 0, pixels);
     }
 
     public void setText(String text) {
@@ -185,12 +185,13 @@ public class TicketView extends View implements View.OnClickListener {
             Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.error);
             canvas.drawBitmap(b, labelWidth, 0.5f, mPaint); // TODO: Check if bitmap drawing works
         }
+
         mPaint.setColor(Color.GRAY);
-        canvas.drawLine(labelWidth, getPaddingTop(), labelWidth, parentHeight, mPaint);
-        canvas.drawLine(getPaddingLeft(), getPaddingTop(), parentWidth, getPaddingTop(), mPaint);
-        canvas.drawLine(getPaddingLeft(), parentHeight, parentWidth, parentHeight, mPaint);
-        canvas.drawLine(getPaddingLeft(), parentHeight, getPaddingLeft(), getPaddingTop(), mPaint);
-        canvas.drawLine(parentWidth, parentHeight, parentWidth, getPaddingTop(), mPaint);
+        canvas.drawLine(labelWidth, getPaddingTop(), labelWidth, parentHeight, mPaint); // Border between color and text
+        canvas.drawLine(getPaddingLeft(), getPaddingTop(), parentWidth, getPaddingTop(), mPaint); // Top line
+        canvas.drawLine(getPaddingLeft(), parentHeight - getPaddingBottom(), parentWidth, parentHeight - getPaddingBottom(), mPaint); // Bottom line
+        canvas.drawLine(getPaddingLeft(), parentHeight, getPaddingLeft(), getPaddingTop(), mPaint); // Left line
+        canvas.drawLine(parentWidth, parentHeight, parentWidth, getPaddingTop(), mPaint); // Right line
 
         parentHeight -= getPaddingTop();
     }

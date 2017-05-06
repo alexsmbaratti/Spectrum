@@ -60,16 +60,19 @@ public class CollectionView extends View implements View.OnClickListener {
         a.recycle();
     }
 
-    public CollectionView(Context context, String collectionName) {
+    public CollectionView(Context context, String collectionName, ArrayList<TicketView> colors) {
         super(context);
         this.context = context;
         initCollectionView();
 
+        // TODO: Character limit / Text size
         float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources().getDisplayMetrics());
 
         setTextSize((int) pixels);
         setText(collectionName);
         setOnClickListener(this);
+
+        this.colors = colors;
         // TODO: Complete constructor
     }
 
@@ -83,11 +86,7 @@ public class CollectionView extends View implements View.OnClickListener {
         colors = new ArrayList<>();
 
         int pixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
-//        setPadding(pixels, pixels, pixels, pixels);
-    }
-
-    public void addColor(TicketView color) {
-        colors.add(color);
+        setPadding(0, pixels, 0, pixels);
     }
 
     public void setText(String text) {
@@ -165,6 +164,7 @@ public class CollectionView extends View implements View.OnClickListener {
         mPaint.setColor(Color.GRAY);
         canvas.drawLine(getPaddingLeft(), getPaddingTop(), parentWidth, getPaddingTop(), mPaint);
         canvas.drawLine(getPaddingLeft(), parentHeight, parentWidth, parentHeight, mPaint);
+        canvas.drawLine(getPaddingLeft(), parentHeight - getPaddingBottom(), parentWidth, parentHeight - getPaddingBottom(), mPaint); // Bottom line
         canvas.drawLine(getPaddingLeft(), parentHeight, getPaddingLeft(), getPaddingTop(), mPaint);
         canvas.drawLine(parentWidth, parentHeight, parentWidth, getPaddingTop(), mPaint);
         canvas.drawLine(getPaddingLeft(), parentHeight * labelHeight, parentWidth, parentHeight * labelHeight, mPaint);
@@ -173,16 +173,17 @@ public class CollectionView extends View implements View.OnClickListener {
             canvas.drawLine(parentWidth * 0.1f * i, parentHeight * labelHeight, parentWidth * 0.1f * i, parentHeight, mPaint);
         }
 
-        //        for (int i = 1; i < 10; i++) {
-//            try {
-//                mPaint.setColor(colors.get(i).getColor());
-//                canvas.drawRect(parentWidth * 0.1f * i, parentHeight * labelHeight, parentWidth * 0.1f * i, parentHeight, mPaint);
-//            } catch (ArrayIndexOutOfBoundsException e) {
-//                break;
-//
-//                // TODO: Fully implement
-//            }
-//        }
+        int rects;
+        if (colors.size() <= 10) {
+            rects = colors.size();
+        } else {
+            rects = 10;
+        }
+
+        for (int i = 0; i < rects; i++) {
+            mPaint.setColor(colors.get(i).getColor());
+            canvas.drawRect(parentWidth * 0.1f * i, parentHeight * labelHeight, parentWidth * 0.1f * (i + 1), parentHeight, mPaint);
+        }
 
         parentHeight -= getPaddingTop();
     }

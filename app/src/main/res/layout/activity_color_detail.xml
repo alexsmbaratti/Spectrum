@@ -25,6 +25,7 @@
             android:layout_height="0dp"
             android:descendantFocusability="beforeDescendants"
             android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
             android:orientation="vertical"
             app:layout_aspectRatio="178%"
             app:layout_widthPercent="100%"
@@ -33,11 +34,23 @@
             <TextView
                 android:id="@+id/currentColor"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:text="@string/current_color"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="48dp" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/current_color"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="32dp" />
+
 
         </LinearLayout>
 

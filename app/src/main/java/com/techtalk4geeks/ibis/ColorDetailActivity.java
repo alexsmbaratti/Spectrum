@@ -17,6 +17,7 @@ public class ColorDetailActivity extends AppCompatActivity {
 
     LinearLayout colorLayout;
     TextView colorText;
+    TextView colorDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,7 @@ public class ColorDetailActivity extends AppCompatActivity {
 
         colorLayout = (LinearLayout) findViewById(R.id.colorLayout);
         colorText = (TextView) findViewById(R.id.currentColor);
+        colorDescription = (TextView) findViewById(R.id.description);
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -42,17 +44,15 @@ public class ColorDetailActivity extends AppCompatActivity {
             color = (String) savedInstanceState.getSerializable("color");
             format = (String) savedInstanceState.getSerializable("format");
             colorName = (String) savedInstanceState.getSerializable("name");
+        }
 
-            // TODO: Implement colorName
+        // TODO: Create color keyboard
+
+        if (colorName == null) {
+            colorName = "";
         }
 
         log("ColorDetailActivity received extra color with value " + color + " in format " + format + " and with description " + colorName);
-
-        if (!(getTitle().toString().isEmpty())) {
-            setTitle(colorName);
-        } else if (getTitle().toString().equals("")) {
-            setTitle(color);
-        }
 
         int colorInt;
 
@@ -76,6 +76,10 @@ public class ColorDetailActivity extends AppCompatActivity {
                 g = (colorInt >> 8) & 0xFF;
                 b = (colorInt >> 0) & 0xFF;
 
+                if (parsableColor.equalsIgnoreCase("FFFFFF") && colorName.isEmpty()) {
+                    colorName = "True White";
+                }
+
                 // TODO: Ensure that demo still works
 
                 break;
@@ -93,6 +97,13 @@ public class ColorDetailActivity extends AppCompatActivity {
         }
 
         colorText.setTextColor(textColor);
+        colorDescription.setTextColor(textColor);
+        colorDescription.setText(colorName);
+
+        if ((colorName.isEmpty())) {
+            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.colorLayout);
+            linearLayout.removeView(colorDescription);
+        }
     }
 
     public void log(String message) {

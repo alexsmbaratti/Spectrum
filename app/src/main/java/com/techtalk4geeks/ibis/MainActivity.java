@@ -102,7 +102,10 @@ public class MainActivity extends AppCompatActivity {
 
             ticket1.setColorName("Rosalina's Hair");
 
-            CollectionView collection1 = new CollectionView(this, "My Collection");
+            ArrayList<TicketView> theSage = new ArrayList<>();
+            theSage.add(new TicketView(this, "#094B03"));
+            theSage.add(new TicketView(this, "#FECB0A"));
+            CollectionView collection1 = new CollectionView(this, "The Sage Colors", theSage);
 
             Space space = new Space(this);
             space.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics()));
