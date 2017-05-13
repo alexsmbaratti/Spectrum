@@ -57,16 +57,18 @@
     </android.support.percent.PercentFrameLayout>
 
     <ScrollView
+        android:id="@+id/colorScroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="5dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/colorScrollLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/large_text" />
+            android:orientation="vertical" />
     </ScrollView>
 
 

@@ -69,7 +69,7 @@ public class TicketView extends View implements View.OnClickListener {
         float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources().getDisplayMetrics());
 
         setTextSize((int) pixels);
-        setText(colorString);
+        setText(colorString.toUpperCase());
         setOnClickListener(this);
         // TODO: Complete constructor
     }

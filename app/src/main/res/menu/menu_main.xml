@@ -2,8 +2,5 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_menu"
     tools:context=".MainActivity">
-    <item
-        android:id="@+id/colordetail"
-        android:orderInCategory="100"
-        android:title="Color Detail" />
+
 </menu>

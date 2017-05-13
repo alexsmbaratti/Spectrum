@@ -3,7 +3,6 @@ package com.techtalk4geeks.ibis;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -134,15 +133,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        if (id == R.id.colordetail) {
-            String demoColor = "#fbc69a";
-            Intent colorIntent = new Intent(this, ColorDetailActivity.class);
-            colorIntent.putExtra("color", demoColor);
-            colorIntent.putExtra("format", "HEX");
-            startActivity(colorIntent);
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
