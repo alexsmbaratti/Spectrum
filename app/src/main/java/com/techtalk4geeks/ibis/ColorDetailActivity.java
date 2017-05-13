@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -19,11 +20,14 @@ import android.widget.TextView;
 public class ColorDetailActivity extends AppCompatActivity {
 
     String color;
-    Color c;
+    Color cColor;
     String colorName;
     int inverseColor;
+    Boolean isFavorite = false;
 
     String format;
+
+    String parsableColor;
 
     LinearLayout colorLayout;
     TextView colorText;
@@ -32,6 +36,8 @@ public class ColorDetailActivity extends AppCompatActivity {
     LinearLayout colorScrollLayout;
 
     private String setColorString = "";
+
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,10 +78,14 @@ public class ColorDetailActivity extends AppCompatActivity {
 
         int colorInt;
 
-        String parsableColor;
         int r = 0;
         int g = 0;
         int b = 0;
+
+        int c;
+        int m;
+        int y;
+        int k = 0;
 
         switch (format) {
             case "HEX":
@@ -91,6 +101,20 @@ public class ColorDetailActivity extends AppCompatActivity {
                 r = (colorInt >> 16) & 0xFF;
                 g = (colorInt >> 8) & 0xFF;
                 b = (colorInt >> 0) & 0xFF;
+
+                k = Math.min(Math.min(255 - r, 255 - g), 255 - b);
+                if (k != 255) {
+                    c = ((255 - r - k) / (255 - k));
+                    m = ((255 - g - k) / (255 - k));
+                    y = ((255 - b - k) / (255 - k));
+                    c = (255 * c);
+                    m = (255 * m);
+                    y = (255 * y);
+                } else {
+                    c = 255 - r;
+                    m = 255 - g;
+                    y = 255 - b;
+                }
 
                 if (parsableColor.equalsIgnoreCase("FFFFFF") && colorName.isEmpty()) {
                     colorName = "True White";
@@ -131,6 +155,7 @@ public class ColorDetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_color_detail, menu);
+        this.menu = menu;
         // TODO: Fix menu inflater
         return true;
     }
@@ -140,9 +165,13 @@ public class ColorDetailActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.favorite) {
-            MenuItem favorite = (MenuItem) findViewById(R.id.favorite);
-            favorite.setIcon(R.drawable.favorite);
-            // TODO: Fix crash
+            if (!isFavorite) {
+                menu.getItem(0).setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.favorite, null));
+                isFavorite = true;
+            } else {
+                menu.getItem(0).setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.not_favorite, null));
+                isFavorite = false;
+            }
             return true;
         }
         if (id == R.id.rename) {
@@ -160,6 +189,13 @@ public class ColorDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     setColorString = input.getText().toString();
+                    LinearLayout linearLayout = (LinearLayout) findViewById(R.id.colorLayout);
+                    if (linearLayout.getChildAt(1) != colorDescription) {
+                        linearLayout.addView(colorDescription);
+                    }
+                    if (input.getText().toString().isEmpty()) {
+                        linearLayout.removeView(colorDescription);
+                    }
                     colorDescription.setText(setColorString);
                 }
             });
