@@ -9,9 +9,9 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/pallete"
+        android:id="@+id/palette"
         android:orderInCategory="200"
-        android:title="Add to Pallete"
+        android:title="Add to Palette"
         app:showAsAction="never" />
 
     <item

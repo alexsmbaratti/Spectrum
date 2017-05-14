@@ -1,5 +1,8 @@
 package com.techtalk4geeks.ibis;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -12,11 +15,16 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 public class RGBFragment extends android.app.Fragment {
+
+    Context context;
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         //Inflate the layout for this fragment
+
+        context = container.getContext();
 
         return inflater.inflate(
                 R.layout.fragment_rgb, container, false);
@@ -100,6 +108,23 @@ public class RGBFragment extends android.app.Fragment {
                     // Perform action on Enter key press
                     Log.d("Ibis", "gText onKeyListener Triggered\nkeyCode: " + keyCode + "\nKeyEvent: " + event.toString());
                     bText.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        bText.setOnKeyListener(new View.OnKeyListener() {
+
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on Enter key press
+                    Intent colorIntent = new Intent(context, ColorDetailActivity.class);
+                    colorIntent.putExtra("color", Color.rgb(Integer.parseInt(rText.getText().toString()), Integer.parseInt(gText.getText().toString()), Integer.parseInt(bText.getText().toString())));
+                    colorIntent.putExtra("format", "RGB");
+                    startActivity(colorIntent);
                     return true;
                 }
                 return false;

@@ -156,7 +156,6 @@ public class ColorDetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_color_detail, menu);
         this.menu = menu;
-        // TODO: Fix menu inflater
         return true;
     }
 
@@ -165,8 +164,8 @@ public class ColorDetailActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.favorite) {
-            if (!isFavorite) {
-                menu.getItem(0).setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.favorite, null));
+            if (!isFavorite) { // If the color is not currently a favorite
+                menu.getItem(0).setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.favorite, null)); // Make the icon filled in
                 isFavorite = true;
             } else {
                 menu.getItem(0).setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.not_favorite, null));
@@ -207,6 +206,10 @@ public class ColorDetailActivity extends AppCompatActivity {
             });
 
             builder.show();
+            return true;
+        }
+        if (id == R.id.palette) {
+            // TODO: Implement
             return true;
         }
 
