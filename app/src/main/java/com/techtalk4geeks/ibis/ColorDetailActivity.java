@@ -78,14 +78,14 @@ public class ColorDetailActivity extends AppCompatActivity {
 
         int colorInt;
 
-        int r = 0;
-        int g = 0;
-        int b = 0;
+        float r = 0;
+        float g = 0;
+        float b = 0;
 
-        int c = 0;
-        int m = 0;
-        int y = 0;
-        int k = 0;
+        float c = 0;
+        float m = 0;
+        float y = 0;
+        float k = 0;
 
         switch (format) {
             case "HEX":
@@ -102,19 +102,15 @@ public class ColorDetailActivity extends AppCompatActivity {
                 g = (colorInt >> 8) & 0xFF;
                 b = (colorInt >> 0) & 0xFF;
 
-                k = Math.min(Math.min(255 - r, 255 - g), 255 - b);
-                if (k != 255) {
-                    c = ((255 - r - k) / (255 - k));
-                    m = ((255 - g - k) / (255 - k));
-                    y = ((255 - b - k) / (255 - k));
-                    c = (255 * c);
-                    m = (255 * m);
-                    y = (255 * y);
-                } else {
-                    c = 255 - r;
-                    m = 255 - g;
-                    y = 255 - b;
-                }
+                Log.d("Ibis", "r = " + r);
+                Log.d("Ibis", "g = " + g);
+                Log.d("Ibis", "b = " + b);
+
+                float max = Math.max(Math.max(r / 255, g / 255), b / 255);
+                k = 1 - max;
+                c = (1 - (r / 255) - k) / (1 - k);
+                m = (1 - (g / 255) - k) / (1 - k);
+                y = (1 - (b / 255) - k) / (1 - k);
 
                 if (parsableColor.equalsIgnoreCase("FFFFFF") && colorName.isEmpty()) {
                     colorName = "True White";
@@ -143,7 +139,7 @@ public class ColorDetailActivity extends AppCompatActivity {
         // TODO: Fix algorithm for CMYK calculation
 
         colorScrollLayout.addView(new CMYKView(this, c, m, y, k));
-        colorScrollLayout.addView(new TicketView(this, String.format("#%02x%02x%02x", 255 - r, 255 - g, 255 - b)));
+        colorScrollLayout.addView(new TicketView(this, String.format("#%02x%02x%02x", 255 - (int) r, 255 - (int) g, 255 - (int) b)));
 
         colorText.setTextColor(textColor);
         colorDescription.setTextColor(textColor);
