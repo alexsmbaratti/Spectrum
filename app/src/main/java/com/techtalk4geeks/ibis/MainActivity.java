@@ -99,12 +99,12 @@ public class MainActivity extends AppCompatActivity {
             TicketView ticket2 = new TicketView(this, "#BBE3ED");
             TicketView ticket3 = new TicketView(this, "#86D0CF");
 
-            ticket1.setColorName("Rosalina's Hair");
-
             ArrayList<TicketView> theSage = new ArrayList<>();
             theSage.add(new TicketView(this, "#094B03"));
             theSage.add(new TicketView(this, "#FECB0A"));
             CollectionView collection1 = new CollectionView(this, "The Sage Colors", theSage);
+
+            CMYKView cmykView = new CMYKView(this, "#FECB0A");
 
             Space space = new Space(this);
             space.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics()));
@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
             ticketList.add(ticket2);
             ticketList.add(ticket3);
             ticketList.add(collection1);
+            ticketList.add(cmykView);
 
             ticketList.add(space);
 

@@ -82,9 +82,9 @@ public class ColorDetailActivity extends AppCompatActivity {
         int g = 0;
         int b = 0;
 
-        int c;
-        int m;
-        int y;
+        int c = 0;
+        int m = 0;
+        int y = 0;
         int k = 0;
 
         switch (format) {
@@ -140,6 +140,7 @@ public class ColorDetailActivity extends AppCompatActivity {
             textColor = Color.WHITE;
         }
 
+        colorScrollLayout.addView(new CMYKView(this, c, m, y, k));
         colorScrollLayout.addView(new TicketView(this, String.format("#%02x%02x%02x", 255 - r, 255 - g, 255 - b)));
 
         colorText.setTextColor(textColor);

@@ -3,6 +3,8 @@ package com.techtalk4geeks.ibis;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,14 +18,17 @@ import android.view.View;
  */
 
 public class CMYKView extends View implements View.OnClickListener {
+    public static final int TEXT_SIZE = 24;
+    public static final int DROP_HEIGHT = 96;
     String colorString;
     Context context;
-    int C;
-    int M;
-    int Y;
-    int K;
+    float C;
+    float M;
+    float Y;
+    float K;
+    float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, TEXT_SIZE, getResources().getDisplayMetrics());
     private Paint mPaint;
-    private String mText;
+    private String mText = "CMYK";
     private int parentHeight;
     private int parentWidth;
     private int color; // Default color
@@ -47,9 +52,6 @@ public class CMYKView extends View implements View.OnClickListener {
                 R.styleable.TicketView);
 
         CharSequence s = a.getString(R.styleable.TicketView_android_text);
-        if (s != null) {
-            setText(s.toString());
-        }
 
         setTextColor(a.getColor(R.styleable.TicketView_android_textColor, 0xFF000000));
 
@@ -68,15 +70,12 @@ public class CMYKView extends View implements View.OnClickListener {
         this.context = context;
         initTicketView();
 
-        float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources().getDisplayMetrics());
-
         setTextSize((int) pixels);
-        setText(colorString.toUpperCase());
         setOnClickListener(this);
         // TODO: Complete constructor
     }
 
-    public CMYKView(Context context, int C, int M, int Y, int K) {
+    public CMYKView(Context context, float C, float M, float Y, float K) {
         super(context);
         this.context = context;
         initTicketView();
@@ -86,10 +85,7 @@ public class CMYKView extends View implements View.OnClickListener {
         this.Y = Y;
         this.K = K;
 
-        float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources().getDisplayMetrics());
-
         setTextSize((int) pixels);
-        setText(colorString.toUpperCase());
         setOnClickListener(this);
         // TODO: Complete constructor
     }
@@ -103,14 +99,6 @@ public class CMYKView extends View implements View.OnClickListener {
 
         int pixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
         setPadding(0, pixels, 0, pixels);
-    }
-
-    public void setText(String text) {
-        mText = text;
-        colorString = text;
-        color = Color.parseColor(colorString);
-        requestLayout();
-        invalidate();
     }
 
     public void setTextSize(int size) {
@@ -167,7 +155,7 @@ public class CMYKView extends View implements View.OnClickListener {
 
     private int measureHeight(int measureSpec) {
         parentWidth = MeasureSpec.getSize(measureSpec) - getPaddingRight();
-        parentHeight = parentWidth / 4;
+        parentHeight = (int) (getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT * 4);
         return parentHeight;
     }
 
@@ -183,26 +171,33 @@ public class CMYKView extends View implements View.OnClickListener {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        parentHeight += getPaddingTop();
-
+        // Rectangle
         mPaint.setColor(Color.WHITE);
-        canvas.drawRect(getPaddingLeft(), getPaddingTop(), parentWidth, parentHeight, mPaint);
+        canvas.drawRect(getPaddingLeft(), getPaddingTop(), parentWidth, getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT * 4, mPaint);
         mPaint.setColor(Color.BLACK);
 
-        float labelWidth = parentWidth * 0.75f;
+        // Text
         textWidth = (int) mPaint.measureText(mText);
         textHeight = mPaint.ascent();
-
-        canvas.drawText(mText, (labelWidth - textWidth) / 2, (parentHeight - textHeight) / 2, mPaint);
-
+        canvas.drawText(mText, getPaddingTop() * 2, (getPaddingTop() + pixels * 2) / 2 + pixels / 2, mPaint);
         mPaint.setColor(Color.GRAY);
-        canvas.drawLine(labelWidth, getPaddingTop(), labelWidth, parentHeight, mPaint); // Border between color and text
-        canvas.drawLine(getPaddingLeft(), getPaddingTop(), parentWidth, getPaddingTop(), mPaint); // Top line
-        canvas.drawLine(getPaddingLeft(), parentHeight - getPaddingBottom(), parentWidth, parentHeight - getPaddingBottom(), mPaint); // Bottom line
-        canvas.drawLine(getPaddingLeft(), parentHeight, getPaddingLeft(), getPaddingTop(), mPaint); // Left line
-        canvas.drawLine(parentWidth, parentHeight, parentWidth, getPaddingTop(), mPaint); // Right line
 
-        parentHeight -= getPaddingTop();
+        // Lines
+        canvas.drawLine(getPaddingLeft(), getPaddingTop(), parentWidth, getPaddingTop(), mPaint); // Top line
+        canvas.drawLine(getPaddingLeft(), getPaddingTop(), getPaddingLeft(), parentHeight, mPaint); // Left Line
+        canvas.drawLine(parentWidth, getPaddingTop(), parentWidth, parentHeight, mPaint); // Right Line
+        canvas.drawLine(getPaddingLeft(), getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT * 4, parentWidth, getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT * 4, mPaint); // Bottom Line
+        canvas.drawLine(getPaddingLeft(), getPaddingTop() + pixels * 2, parentWidth, getPaddingTop() + pixels * 2, mPaint); // Dividing line
+
+        // Drops
+        Bitmap bitC = BitmapFactory.decodeResource(getResources(), R.mipmap.drop_c);
+        Bitmap bitM = BitmapFactory.decodeResource(getResources(), R.mipmap.drop_m);
+        Bitmap bitY = BitmapFactory.decodeResource(getResources(), R.mipmap.drop_y);
+        Bitmap bitK = BitmapFactory.decodeResource(getResources(), R.mipmap.drop_k);
+        canvas.drawBitmap(bitC, getPaddingTop() * 2, getPaddingTop() * 2 + pixels * 2, mPaint);
+        canvas.drawBitmap(bitM, getPaddingTop() * 2, getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT, mPaint);
+        canvas.drawBitmap(bitY, getPaddingTop() * 2, getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT * 2, mPaint);
+        canvas.drawBitmap(bitK, getPaddingTop() * 2, getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT * 3, mPaint);
     }
     // TODO: Work on adjusting padding
 
