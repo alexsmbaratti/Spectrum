@@ -85,6 +85,11 @@ public class CMYKView extends View implements View.OnClickListener {
         this.Y = Y;
         this.K = K;
 
+        Log.d("Ibis", "C = " + C);
+        Log.d("Ibis", "M = " + M);
+        Log.d("Ibis", "Y = " + Y);
+        Log.d("Ibis", "K = " + K);
+
         setTextSize((int) pixels);
         setOnClickListener(this);
         // TODO: Complete constructor
@@ -198,7 +203,16 @@ public class CMYKView extends View implements View.OnClickListener {
         canvas.drawBitmap(bitM, getPaddingTop() * 2, getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT, mPaint);
         canvas.drawBitmap(bitY, getPaddingTop() * 2, getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT * 2, mPaint);
         canvas.drawBitmap(bitK, getPaddingTop() * 2, getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT * 3, mPaint);
+
+        // Bars
+        mPaint.setColor(Color.parseColor("#78EEEB"));
+        canvas.drawRect(getPaddingTop() * 2 + DROP_HEIGHT, getPaddingTop() * 2 + pixels * 2 + 5, parentWidth - getPaddingTop() * 2, getPaddingTop() * 2 + pixels * 4 - 5, mPaint);
+        mPaint.setColor(Color.parseColor("#FF6AA7"));
+        canvas.drawRect(getPaddingTop() * 2 + DROP_HEIGHT, getPaddingTop() * 2 + pixels * 2 + 5 + DROP_HEIGHT, parentWidth - getPaddingTop() * 2, getPaddingTop() * 2 + pixels * 4 + DROP_HEIGHT - 5, mPaint);
+        mPaint.setColor(Color.parseColor("#FFDB61"));
+        canvas.drawRect(getPaddingTop() * 2 + DROP_HEIGHT, getPaddingTop() * 2 + pixels * 2 + 5 + DROP_HEIGHT * 2, parentWidth - getPaddingTop() * 2, getPaddingTop() * 2 + pixels * 4 + DROP_HEIGHT * 2 - 5, mPaint);
+        mPaint.setColor(Color.parseColor("#4F4F4F"));
+        canvas.drawRect(getPaddingTop() * 2 + DROP_HEIGHT, getPaddingTop() * 2 + pixels * 2 + 5 + DROP_HEIGHT * 3, parentWidth - getPaddingTop() * 2, getPaddingTop() * 2 + pixels * 4 + DROP_HEIGHT * 3 - 5, mPaint);
     }
     // TODO: Work on adjusting padding
-
 }

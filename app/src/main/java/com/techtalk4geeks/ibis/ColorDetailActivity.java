@@ -140,6 +140,8 @@ public class ColorDetailActivity extends AppCompatActivity {
             textColor = Color.WHITE;
         }
 
+        // TODO: Fix algorithm for CMYK calculation
+
         colorScrollLayout.addView(new CMYKView(this, c, m, y, k));
         colorScrollLayout.addView(new TicketView(this, String.format("#%02x%02x%02x", 255 - r, 255 - g, 255 - b)));
 
