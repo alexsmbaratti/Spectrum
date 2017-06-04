@@ -13,6 +13,9 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 /**
  * Created by alex on 4/22/17.
  */
@@ -176,6 +179,9 @@ public class CMYKView extends View implements View.OnClickListener {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.CEILING);
+
         // Rectangle
         mPaint.setColor(Color.WHITE);
         canvas.drawRect(getPaddingLeft(), getPaddingTop(), parentWidth, getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT * 4, mPaint);
@@ -199,10 +205,10 @@ public class CMYKView extends View implements View.OnClickListener {
         Bitmap bitM = BitmapFactory.decodeResource(getResources(), R.mipmap.drop_m);
         Bitmap bitY = BitmapFactory.decodeResource(getResources(), R.mipmap.drop_y);
         Bitmap bitK = BitmapFactory.decodeResource(getResources(), R.mipmap.drop_k);
-        canvas.drawBitmap(bitC, getPaddingTop() * 2, getPaddingTop() * 2 + pixels * 2, mPaint);
-        canvas.drawBitmap(bitM, getPaddingTop() * 2, getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT, mPaint);
-        canvas.drawBitmap(bitY, getPaddingTop() * 2, getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT * 2, mPaint);
-        canvas.drawBitmap(bitK, getPaddingTop() * 2, getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT * 3, mPaint);
+        canvas.drawBitmap(bitC, getPaddingTop(), getPaddingTop() * 2 + pixels * 2, mPaint);
+        canvas.drawBitmap(bitM, getPaddingTop(), getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT, mPaint);
+        canvas.drawBitmap(bitY, getPaddingTop(), getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT * 2, mPaint);
+        canvas.drawBitmap(bitK, getPaddingTop(), getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT * 3, mPaint);
 
         // Bars
         mPaint.setColor(Color.parseColor("#78EEEB"));
@@ -213,6 +219,13 @@ public class CMYKView extends View implements View.OnClickListener {
         canvas.drawRect(getPaddingTop() * 2 + DROP_HEIGHT, getPaddingTop() * 2 + pixels * 2 + 5 + DROP_HEIGHT * 2, parentWidth - getPaddingTop() * 2, getPaddingTop() * 2 + pixels * 4 + DROP_HEIGHT * 2 - 5, mPaint);
         mPaint.setColor(Color.parseColor("#4F4F4F"));
         canvas.drawRect(getPaddingTop() * 2 + DROP_HEIGHT, getPaddingTop() * 2 + pixels * 2 + 5 + DROP_HEIGHT * 3, parentWidth - getPaddingTop() * 2, getPaddingTop() * 2 + pixels * 4 + DROP_HEIGHT * 3 - 5, mPaint);
+
+        mPaint.setColor(Color.BLACK);
+        canvas.drawText(String.valueOf(df.format(C)) + "%", getPaddingTop() * 3 + DROP_HEIGHT, DROP_HEIGHT * 2 - getPaddingTop(), mPaint);
+        canvas.drawText(String.valueOf(df.format(M)) + "%", getPaddingTop() * 3 + DROP_HEIGHT, DROP_HEIGHT * 3 - getPaddingTop(), mPaint);
+        canvas.drawText(String.valueOf(df.format(Y)) + "%", getPaddingTop() * 3 + DROP_HEIGHT, DROP_HEIGHT * 4 - getPaddingTop(), mPaint);
+        mPaint.setColor(Color.WHITE);
+        canvas.drawText(String.valueOf(df.format(K)) + "%", getPaddingTop() * 3 + DROP_HEIGHT, DROP_HEIGHT * 5 - getPaddingTop(), mPaint);
     }
     // TODO: Work on adjusting padding
 }
