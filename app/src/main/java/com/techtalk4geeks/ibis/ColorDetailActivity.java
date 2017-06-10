@@ -108,9 +108,16 @@ public class ColorDetailActivity extends AppCompatActivity {
 
                 float max = Math.max(Math.max(r / 255, g / 255), b / 255);
                 k = 1 - max;
-                c = (1 - (r / 255) - k) / (1 - k);
-                m = (1 - (g / 255) - k) / (1 - k);
-                y = (1 - (b / 255) - k) / (1 - k);
+                if (k != 1) {
+                    c = (1 - (r / 255) - k) / (1 - k);
+                    m = (1 - (g / 255) - k) / (1 - k);
+                    y = (1 - (b / 255) - k) / (1 - k);
+                } else {
+                    c = 0;
+                    m = 0;
+                    y = 0;
+
+                }
 
                 if (parsableColor.equalsIgnoreCase("FFFFFF") && colorName.isEmpty()) {
                     colorName = "True White";

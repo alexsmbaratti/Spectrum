@@ -197,4 +197,6 @@ public class TicketView extends View implements View.OnClickListener {
     }
     // TODO: Work on adjusting padding
 
+    // TODO: Add labels for inverses
+
 }

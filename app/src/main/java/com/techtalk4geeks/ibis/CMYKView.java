@@ -1,7 +1,6 @@
 package com.techtalk4geeks.ibis;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -31,7 +30,7 @@ public class CMYKView extends View implements View.OnClickListener {
     float K;
     float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, TEXT_SIZE, getResources().getDisplayMetrics());
     private Paint mPaint;
-    private String mText = "CMYK";
+    private String mText = "CMYK Percentages";
     private int parentHeight;
     private int parentWidth;
     private int color; // Default color
@@ -134,11 +133,7 @@ public class CMYKView extends View implements View.OnClickListener {
     public void onClick(View arg0) {
         Log.d("Ibis", "TicketView clicked");
 
-        Intent colorIntent = new Intent(context, ColorDetailActivity.class);
-        colorIntent.putExtra("color", colorString);
-        colorIntent.putExtra("format", "HEX");
-        colorIntent.putExtra("name", colorName);
-        context.startActivity(colorIntent);
+        // TODO: onClick
     }
 
     private int measureWidth(int measureSpec) {
@@ -185,6 +180,7 @@ public class CMYKView extends View implements View.OnClickListener {
         // Rectangle
         mPaint.setColor(Color.WHITE);
         canvas.drawRect(getPaddingLeft(), getPaddingTop(), parentWidth, getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT * 4, mPaint);
+        // TODO: Adjust bounds
         mPaint.setColor(Color.BLACK);
 
         // Text
@@ -221,11 +217,11 @@ public class CMYKView extends View implements View.OnClickListener {
         canvas.drawRect(getPaddingTop() * 2 + DROP_HEIGHT, getPaddingTop() * 2 + pixels * 2 + 5 + DROP_HEIGHT * 3, parentWidth - getPaddingTop() * 2, getPaddingTop() * 2 + pixels * 4 + DROP_HEIGHT * 3 - 5, mPaint);
 
         mPaint.setColor(Color.BLACK);
-        canvas.drawText(String.valueOf(df.format(C)) + "%", getPaddingTop() * 3 + DROP_HEIGHT, DROP_HEIGHT * 2 - getPaddingTop(), mPaint);
-        canvas.drawText(String.valueOf(df.format(M)) + "%", getPaddingTop() * 3 + DROP_HEIGHT, DROP_HEIGHT * 3 - getPaddingTop(), mPaint);
-        canvas.drawText(String.valueOf(df.format(Y)) + "%", getPaddingTop() * 3 + DROP_HEIGHT, DROP_HEIGHT * 4 - getPaddingTop(), mPaint);
+        canvas.drawText(String.valueOf(df.format(C * 100)) + "%", getPaddingTop() * 3 + DROP_HEIGHT, DROP_HEIGHT * 2 - getPaddingTop(), mPaint);
+        canvas.drawText(String.valueOf(df.format(M * 100)) + "%", getPaddingTop() * 3 + DROP_HEIGHT, DROP_HEIGHT * 3 - getPaddingTop(), mPaint);
+        canvas.drawText(String.valueOf(df.format(Y * 100)) + "%", getPaddingTop() * 3 + DROP_HEIGHT, DROP_HEIGHT * 4 - getPaddingTop(), mPaint);
         mPaint.setColor(Color.WHITE);
-        canvas.drawText(String.valueOf(df.format(K)) + "%", getPaddingTop() * 3 + DROP_HEIGHT, DROP_HEIGHT * 5 - getPaddingTop(), mPaint);
+        canvas.drawText(String.valueOf(df.format(K * 100)) + "%", getPaddingTop() * 3 + DROP_HEIGHT, DROP_HEIGHT * 5 - getPaddingTop(), mPaint);
     }
     // TODO: Work on adjusting padding
 }
