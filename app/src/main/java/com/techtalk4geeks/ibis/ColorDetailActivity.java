@@ -146,7 +146,7 @@ public class ColorDetailActivity extends AppCompatActivity {
         // TODO: Fix algorithm for CMYK calculation
 
         colorScrollLayout.addView(new CMYKView(this, c, m, y, k));
-        colorScrollLayout.addView(new TicketView(this, String.format("#%02x%02x%02x", 255 - (int) r, 255 - (int) g, 255 - (int) b)));
+        colorScrollLayout.addView(new TicketTextView(this, String.format("#%02x%02x%02x", 255 - (int) r, 255 - (int) g, 255 - (int) b), "Inverse"));
 
         colorText.setTextColor(textColor);
         colorDescription.setTextColor(textColor);
