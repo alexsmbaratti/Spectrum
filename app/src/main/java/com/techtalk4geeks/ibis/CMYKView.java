@@ -21,7 +21,7 @@ import java.text.DecimalFormat;
 
 public class CMYKView extends View implements View.OnClickListener {
     public static final int TEXT_SIZE = 24;
-    public static final int DROP_HEIGHT = 96;
+    public static int DROP_HEIGHT = 96;
     String colorString;
     Context context;
     float C;
@@ -201,6 +201,9 @@ public class CMYKView extends View implements View.OnClickListener {
         Bitmap bitM = BitmapFactory.decodeResource(getResources(), R.mipmap.drop_m);
         Bitmap bitY = BitmapFactory.decodeResource(getResources(), R.mipmap.drop_y);
         Bitmap bitK = BitmapFactory.decodeResource(getResources(), R.mipmap.drop_k);
+
+        DROP_HEIGHT = bitC.getHeight();
+
         canvas.drawBitmap(bitC, getPaddingTop(), getPaddingTop() * 2 + pixels * 2, mPaint);
         canvas.drawBitmap(bitM, getPaddingTop(), getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT, mPaint);
         canvas.drawBitmap(bitY, getPaddingTop(), getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT * 2, mPaint);

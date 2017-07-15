@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             space.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics()));
 
             ticketList.add(ticket1);
-            ticketList.add(ticketTextView);
+//            ticketList.add(ticketTextView);
             ticketList.add(ticket2);
             ticketList.add(ticket3);
             ticketList.add(ticket4);

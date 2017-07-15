@@ -162,18 +162,17 @@ public class TicketTextView extends View implements View.OnClickListener {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        float labelWidth = parentWidth * 0.75f;
-        textWidth = (int) mPaint.measureText(mText);
-        textHeight = mPaint.ascent();
-
         // Rectangle
         mPaint.setColor(Color.WHITE);
         canvas.drawRect(getPaddingLeft(), getPaddingTop(), parentWidth, parentHeight, mPaint);
         // TODO: Adjust bounds
 
         mPaint.setColor(Color.BLACK);
+        float labelWidth = parentWidth * 0.75f;
+        textWidth = (int) mPaint.measureText(mText);
+        textHeight = mPaint.ascent();
         setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources().getDisplayMetrics()));
-        canvas.drawText(mText, (labelWidth - textWidth) / 2, (parentHeight - textHeight) / 2 + pixels * 2, mPaint);
+        canvas.drawText(mText, (labelWidth - textWidth) / 2, (parentWidth / 4 - textHeight) / 2, mPaint);
         try {
             mPaint.setColor(Color.parseColor(colorString)); // Box color
             canvas.drawRect(labelWidth, getPaddingTop() + pixels * 2, parentWidth, parentHeight, mPaint);
@@ -189,7 +188,7 @@ public class TicketTextView extends View implements View.OnClickListener {
         // Text
         textWidth = (int) mPaint.measureText(ticketText);
         textHeight = mPaint.ascent();
-        mPaint.setTextSize(16 * getResources().getDisplayMetrics().density);
+        mPaint.setTextSize(24 * getResources().getDisplayMetrics().density);
         mPaint.setColor(Color.BLACK);
         canvas.drawText(ticketText, getPaddingTop() * 2, (getPaddingTop() + pixels * 2) / 2 + pixels / 2, mPaint);
         mPaint.setColor(Color.GRAY);
