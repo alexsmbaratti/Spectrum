@@ -196,7 +196,7 @@ public class TicketTextView extends View implements View.OnClickListener {
         canvas.drawLine(getPaddingLeft(), getPaddingTop(), parentWidth, getPaddingTop(), mPaint); // Top line
         canvas.drawLine(getPaddingLeft(), getPaddingTop(), getPaddingLeft(), parentHeight, mPaint); // Left Line
         canvas.drawLine(parentWidth, getPaddingTop(), parentWidth, parentHeight, mPaint); // Right Line
-        canvas.drawLine(getPaddingLeft(), getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT * 4, parentWidth, getPaddingTop() * 2 + pixels * 2 + DROP_HEIGHT * 4, mPaint); // Bottom Line
+        canvas.drawLine(getPaddingLeft(), parentHeight, parentWidth, parentHeight, mPaint); // Bottom Line
         canvas.drawLine(getPaddingLeft(), getPaddingTop() + pixels * 2, parentWidth, getPaddingTop() + pixels * 2, mPaint); // Dividing line
         canvas.drawLine(labelWidth, getPaddingTop() + pixels * 2, labelWidth, parentHeight + pixels * 2, mPaint); // Border between color and text
     }
