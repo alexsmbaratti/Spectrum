@@ -1,7 +1,6 @@
 package com.techtalk4geeks.ibis;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -137,13 +136,15 @@ public class TriadicView extends View implements View.OnClickListener {
     }
 
     public void onClick(View arg0) {
-        Log.d("Ibis", "TicketView clicked");
+        Log.d("Ibis", "TriadicView clicked");
+        // TODO: Determine which color is tapped
+        Log.i("Ibis", "STATIC: " + getPaddingTop() + pixels * 4);
 
-        Intent colorIntent = new Intent(context, ColorDetailActivity.class);
-        colorIntent.putExtra("color", colorString);
-        colorIntent.putExtra("format", "HEX");
-        colorIntent.putExtra("name", colorName);
-        context.startActivity(colorIntent);
+//        Intent colorIntent = new Intent(context, ColorDetailActivity.class);
+//        colorIntent.putExtra("color", colorString);
+//        colorIntent.putExtra("format", "HEX");
+//        colorIntent.putExtra("name", colorName);
+//        context.startActivity(colorIntent);
     }
 
     private int measureWidth(int measureSpec) {

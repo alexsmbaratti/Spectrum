@@ -122,7 +122,10 @@ public class RGBFragment extends android.app.Fragment {
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     // Perform action on Enter key press
                     Intent colorIntent = new Intent(context, ColorDetailActivity.class);
-                    colorIntent.putExtra("color", Color.rgb(Integer.parseInt(rText.getText().toString()), Integer.parseInt(gText.getText().toString()), Integer.parseInt(bText.getText().toString())));
+                    int rawColor = Color.rgb(Integer.parseInt(rText.getText().toString()), Integer.parseInt(gText.getText().toString()), Integer.parseInt(bText.getText().toString()));
+                    String hexColor = String.format("#%06X", (0xFFFFFF & rawColor));
+                    Log.i("Ibis", hexColor);
+                    colorIntent.putExtra("color", hexColor);
                     colorIntent.putExtra("format", "RGB");
                     startActivity(colorIntent);
                     return true;

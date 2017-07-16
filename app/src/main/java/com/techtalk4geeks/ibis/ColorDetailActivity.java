@@ -87,54 +87,43 @@ public class ColorDetailActivity extends AppCompatActivity {
         float y = 0;
         float k = 0;
 
-        switch (format) {
-            case "HEX":
-                colorLayout.setBackgroundColor((Color.parseColor(color)));
-                colorText.setText(color.toUpperCase());
+        colorLayout.setBackgroundColor((Color.parseColor(color))); // TODO: Change text based on format
+        colorText.setText(color.toUpperCase());
 
-                if (color.charAt(0) == '#') {
-                    parsableColor = color.substring(1);
-                } else {
-                    parsableColor = color;
-                }
-                colorInt = (int) Long.parseLong(parsableColor, 16);
-                r = (colorInt >> 16) & 0xFF;
-                g = (colorInt >> 8) & 0xFF;
-                b = (colorInt >> 0) & 0xFF;
-
-                Log.d("Ibis", "r = " + r);
-                Log.d("Ibis", "g = " + g);
-                Log.d("Ibis", "b = " + b);
-
-                float max = Math.max(Math.max(r / 255, g / 255), b / 255);
-                k = 1 - max;
-                if (k != 1) {
-                    c = (1 - (r / 255) - k) / (1 - k);
-                    m = (1 - (g / 255) - k) / (1 - k);
-                    y = (1 - (b / 255) - k) / (1 - k);
-                } else {
-                    c = 0;
-                    m = 0;
-                    y = 0;
-
-                }
-
-                if (parsableColor.equalsIgnoreCase("FFFFFF") && colorName.isEmpty()) {
-                    colorName = "True White";
-                }
-
-                // TODO: Ensure that demo still works
-
-                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#" + parsableColor)));
-//                getWindow().setStatusBarColor(Color.parseColor("#" + parsableColor));
-
-                break;
-            case "RGB":
-                // TODO: Add more formats
-                break;
-            default:
-                // TODO: Ensure actionBar changes color in all cases
+        if (color.charAt(0) == '#') {
+            parsableColor = color.substring(1);
+        } else {
+            parsableColor = color;
         }
+        colorInt = (int) Long.parseLong(parsableColor, 16);
+        r = (colorInt >> 16) & 0xFF;
+        g = (colorInt >> 8) & 0xFF;
+        b = (colorInt >> 0) & 0xFF;
+
+        Log.d("Ibis", "r = " + r);
+        Log.d("Ibis", "g = " + g);
+        Log.d("Ibis", "b = " + b);
+
+        float max = Math.max(Math.max(r / 255, g / 255), b / 255);
+        k = 1 - max;
+        if (k != 1) {
+            c = (1 - (r / 255) - k) / (1 - k);
+            m = (1 - (g / 255) - k) / (1 - k);
+            y = (1 - (b / 255) - k) / (1 - k);
+        } else {
+            c = 0;
+            m = 0;
+            y = 0;
+        }
+
+        if (parsableColor.equalsIgnoreCase("FFFFFF") && colorName.isEmpty()) {
+            colorName = "True White";
+        }
+
+        // TODO: Ensure that demo still works
+
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#" + parsableColor)));
+//                getWindow().setStatusBarColor(Color.parseColor("#" + parsableColor));
 
         int textColor;
         if ((r * 0.299 + g * 0.587 + b * 0.114) > 186) {
@@ -145,9 +134,21 @@ public class ColorDetailActivity extends AppCompatActivity {
 
         // TODO: Fix algorithm for CMYK calculation
 
+        Log.i("Ibis", "Color = " + color);
         colorScrollLayout.addView(new CMYKView(this, c, m, y, k));
         colorScrollLayout.addView(new TicketTextView(this, String.format("#%02x%02x%02x", 255 - (int) r, 255 - (int) g, 255 - (int) b), "Inverse"));
-        colorScrollLayout.addView(new TriadicView(this, color));
+        TriadicView t = new TriadicView(this, color);
+        colorScrollLayout.addView(t);
+//        t.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//                    Log.i("Ibis", "Touch coordinates : " +
+//                            String.valueOf(event.getX()) + "x" + String.valueOf(event.getY()));
+//                }
+//                return true;
+//            }
+//        });
 
         colorText.setTextColor(textColor);
         colorDescription.setTextColor(textColor);
