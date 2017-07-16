@@ -147,6 +147,7 @@ public class ColorDetailActivity extends AppCompatActivity {
 
         colorScrollLayout.addView(new CMYKView(this, c, m, y, k));
         colorScrollLayout.addView(new TicketTextView(this, String.format("#%02x%02x%02x", 255 - (int) r, 255 - (int) g, 255 - (int) b), "Inverse"));
+        colorScrollLayout.addView(new TriadicView(this, color));
 
         colorText.setTextColor(textColor);
         colorDescription.setTextColor(textColor);

@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<TicketView> theSage = new ArrayList<>();
             theSage.add(new TicketView(this, "#094B03"));
             theSage.add(new TicketView(this, "#FECB0A"));
-            CollectionView collection1 = new CollectionView(this, "The Sage Colors", theSage);
+            CollectionView collection1 = new CollectionView(this, "Test Collection", theSage);
 
             Space space = new Space(this);
             space.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics()));
