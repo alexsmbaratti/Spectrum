@@ -121,50 +121,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ArrayList<View> ticketList = new ArrayList<>();
+
         if (BuildConfig.DEBUG) {
             Toast.makeText(this, "This is a development build", Toast.LENGTH_SHORT).show();
-            ArrayList<View> ticketList = new ArrayList<>();
-            TicketView ticket1 = new TicketView(this, "#FBC69A");
-            TicketView ticket2 = new TicketView(this, "#BBE3ED");
-            TicketView ticket3 = new TicketView(this, "#86D0CF");
-            TicketView ticket4 = new TicketView(this, "#345678");
+        }
 
-            ArrayList<TicketView> theSage = new ArrayList<>();
-            theSage.add(new TicketView(this, "#094B03"));
-            theSage.add(new TicketView(this, "#FECB0A"));
-            CollectionView collection1 = new CollectionView(this, "Test Collection", theSage);
+        Space space = new Space(this);
+        space.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics()));
 
-            Space space = new Space(this);
-            space.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics()));
-
-//            ticketList.add(ticket1);
-//            ticketList.add(ticket2);
-//            ticketList.add(ticket3);
-//            ticketList.add(ticket4);
-//            ticketList.add(collection1);
-            if (colors.size() > 0) {
-                try {
-                    for (Iterator<String> iterator = colors.iterator(); iterator.hasNext(); ) {
-                        String[] output = iterator.next().split("/");
-                        ticketList.add(new TicketView(this, output[0]));
-                    }
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
+        if (colors.size() > 0) {
+            try {
+                for (Iterator<String> iterator = colors.iterator(); iterator.hasNext(); ) {
+                    String[] output = iterator.next().split("/");
+                    ticketList.add(new TicketView(this, output[0]));
                 }
-            } else {
-                TextView explanation = new TextView(this);
-                explanation.setText("Colors you save as favorites will appear here."); // Maybe make this recents and create a separate area for favorites?
-                explanation.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                ticketList.add(explanation);
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             }
+        } else {
+            TextView explanation = new TextView(this);
+            explanation.setText("Colors you save as favorites will appear here."); // Maybe make this recents and create a separate area for favorites?
+            explanation.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            ticketList.add(explanation);
+        }
 
-            ticketList.add(space);
+        ticketList.add(space);
 
-            for (int i = 0; i < ticketList.size(); i++) {
-                ticketList.get(i).setElevation((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics()));
-                ticketLayout.addView(ticketList.get(i));
-            }
-            // TODO: Find a way to check if the screen is inverted
+        for (int i = 0; i < ticketList.size(); i++) {
+            ticketList.get(i).setElevation((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics()));
+            ticketLayout.addView(ticketList.get(i));
         }
 
     }
