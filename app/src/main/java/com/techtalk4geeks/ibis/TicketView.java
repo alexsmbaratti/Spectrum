@@ -57,7 +57,6 @@ public class TicketView extends View implements View.OnClickListener {
         }
 
         setOnClickListener(this);
-
         a.recycle();
     }
 

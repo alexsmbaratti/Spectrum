@@ -194,7 +194,7 @@ public class ColorDetailActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() { // Puts the user back to the main activity
         Intent main = new Intent(this, MainActivity.class);
         this.startActivity(main);
     }

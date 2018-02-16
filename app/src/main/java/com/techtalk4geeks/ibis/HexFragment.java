@@ -31,11 +31,8 @@ public class HexFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         context = container.getContext();
-
         View v = inflater.inflate(R.layout.fragment_hex, container, false);
-
         hexET = (EditText) v.findViewById(R.id.hexText);
-
         return v;
     }
 
