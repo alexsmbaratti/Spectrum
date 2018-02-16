@@ -17,6 +17,6 @@
     <item
         android:id="@+id/rename"
         android:orderInCategory="300"
-        android:title="Description"
+        android:title="Add Name"
         app:showAsAction="never" />
 </menu>

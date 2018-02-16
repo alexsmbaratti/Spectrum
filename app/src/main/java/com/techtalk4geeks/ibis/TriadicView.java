@@ -194,12 +194,12 @@ public class TriadicView extends View implements View.OnClickListener {
         float labelWidth = parentWidth * 0.75f;
         textWidth = (int) mPaint.measureText(mText);
         textHeight = mPaint.ascent();
-        canvas.drawText(triad1, getPaddingTop() * 2, (pixels * 6 - textHeight) / 2, mPaint);
-        canvas.drawText(triad2, getPaddingTop() * 2, (pixels * 10 - textHeight) / 2, mPaint);
+        canvas.drawText(triad2, getPaddingTop() * 2, (pixels * 6 - textHeight) / 2, mPaint);
+        canvas.drawText(triad1, getPaddingTop() * 2, (pixels * 10 - textHeight) / 2, mPaint);
         canvas.drawText(triad3, getPaddingTop() * 2, (pixels * 14 - textHeight) / 2, mPaint);
-        mPaint.setColor(Color.parseColor(triad1)); // Triad 1
-        canvas.drawRect(parentWidth / 2, getPaddingTop() + pixels * 2, parentWidth, getPaddingTop() + pixels * 4, mPaint);
         mPaint.setColor(Color.parseColor(triad2)); // Triad 2
+        canvas.drawRect(parentWidth / 2, getPaddingTop() + pixels * 2, parentWidth, getPaddingTop() + pixels * 4, mPaint);
+        mPaint.setColor(Color.parseColor(triad1)); // Triad 1
         canvas.drawRect(parentWidth / 2, getPaddingTop() + pixels * 4, parentWidth, getPaddingTop() + pixels * 6, mPaint);
         mPaint.setColor(Color.parseColor(triad3)); // Triad 3
         canvas.drawRect(parentWidth / 2, getPaddingTop() + pixels * 6, parentWidth, getPaddingTop() + pixels * 8, mPaint);

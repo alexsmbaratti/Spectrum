@@ -1,8 +1,11 @@
 package com.techtalk4geeks.ibis;
 
+import android.accessibilityservice.AccessibilityServiceInfo;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,6 +13,7 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.accessibility.AccessibilityManager;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -18,6 +22,10 @@ import android.widget.Space;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,16 +37,36 @@ public class MainActivity extends AppCompatActivity {
     ScrollView scrollView;
     LinearLayout ticketLayout;
 
+    SharedPreferences prefs;
+    Set<String> colors;
+
     int radioButton;
+
+    public static void logInstalledAccessiblityServices(Context context) {
+
+        AccessibilityManager am = (AccessibilityManager) context
+                .getSystemService(Context.ACCESSIBILITY_SERVICE);
+
+        List<AccessibilityServiceInfo> runningServices = am
+                .getInstalledAccessibilityServiceList();
+        for (AccessibilityServiceInfo service : runningServices) {
+            Log.i("Ibis", "SERVICE: " + service.getId());
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         radioButton = R.id.hex;
         group = (RadioGroup) findViewById(R.id.radioGroup);
         scrollView = (ScrollView) findViewById(R.id.mainScrollView);
         ticketLayout = (LinearLayout) findViewById(R.id.ticketLayout);
+
+        prefs = this.getSharedPreferences(
+                "com.techtalk4geeks.ibis", Context.MODE_PRIVATE);
+        colors = prefs.getStringSet("com.techtalk4geeks.ibis.colors", new HashSet<String>());
 
         // Potentially redundant code
         // TODO: Reevaluate and remove if necessary
@@ -108,11 +136,20 @@ public class MainActivity extends AppCompatActivity {
             Space space = new Space(this);
             space.setMinimumHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics()));
 
-            ticketList.add(ticket1);
-            ticketList.add(ticket2);
-            ticketList.add(ticket3);
-            ticketList.add(ticket4);
-            ticketList.add(collection1);
+//            ticketList.add(ticket1);
+//            ticketList.add(ticket2);
+//            ticketList.add(ticket3);
+//            ticketList.add(ticket4);
+//            ticketList.add(collection1);
+
+            try {
+                for (Iterator<String> iterator = colors.iterator(); iterator.hasNext(); ) {
+                    String[] output = iterator.next().split("/");
+                    ticketList.add(new TicketView(this, output[0]));
+                }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
 
             ticketList.add(space);
 
@@ -120,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 ticketList.get(i).setElevation((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics()));
                 ticketLayout.addView(ticketList.get(i));
             }
+            // TODO: Find a way to check if the screen is inverted
         }
 
     }

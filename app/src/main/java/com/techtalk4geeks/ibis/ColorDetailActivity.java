@@ -1,6 +1,9 @@
 package com.techtalk4geeks.ibis;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -17,6 +20,10 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 public class ColorDetailActivity extends AppCompatActivity {
 
     String color;
@@ -28,6 +35,9 @@ public class ColorDetailActivity extends AppCompatActivity {
     String format;
 
     String parsableColor;
+
+    SharedPreferences prefs;
+    Set<String> colors;
 
     LinearLayout colorLayout;
     TextView colorText;
@@ -67,8 +77,6 @@ public class ColorDetailActivity extends AppCompatActivity {
             format = (String) savedInstanceState.getSerializable("format");
             colorName = (String) savedInstanceState.getSerializable("name");
         }
-
-        // TODO: Create color keyboard
 
         if (colorName == null) {
             colorName = "";
@@ -122,9 +130,6 @@ public class ColorDetailActivity extends AppCompatActivity {
 
         // TODO: Ensure that demo still works
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#" + parsableColor)));
-//                getWindow().setStatusBarColor(Color.parseColor("#" + parsableColor));
-
         int textColor;
         if ((r * 0.299 + g * 0.587 + b * 0.114) > 186) {
             textColor = Color.BLACK;
@@ -137,8 +142,16 @@ public class ColorDetailActivity extends AppCompatActivity {
         Log.i("Ibis", "Color = " + color);
         colorScrollLayout.addView(new CMYKView(this, c, m, y, k));
         colorScrollLayout.addView(new TicketTextView(this, String.format("#%02x%02x%02x", 255 - (int) r, 255 - (int) g, 255 - (int) b), "Inverse"));
-        TriadicView t = new TriadicView(this, color);
-        colorScrollLayout.addView(t);
+        if (parsableColor.equalsIgnoreCase("FFFFFF")) {
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#000000")));
+        } else if (parsableColor.equalsIgnoreCase("000000")) {
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#000000")));
+        } else {
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#" + parsableColor)));
+//                getWindow().setStatusBarColor(Color.parseColor("#" + parsableColor));
+
+            TriadicView t = new TriadicView(this, color);
+            colorScrollLayout.addView(t);
 //        t.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
 //            public boolean onTouch(View v, MotionEvent event) {
@@ -149,6 +162,7 @@ public class ColorDetailActivity extends AppCompatActivity {
 //                return true;
 //            }
 //        });
+        }
 
         colorText.setTextColor(textColor);
         colorDescription.setTextColor(textColor);
@@ -158,24 +172,55 @@ public class ColorDetailActivity extends AppCompatActivity {
             LinearLayout linearLayout = (LinearLayout) findViewById(R.id.colorLayout);
             linearLayout.removeView(colorDescription);
         }
+
+        prefs = this.getSharedPreferences(
+                "com.techtalk4geeks.ibis", Context.MODE_PRIVATE);
+        colors = prefs.getStringSet("com.techtalk4geeks.ibis.colors", new HashSet<String>());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_color_detail, menu);
         this.menu = menu;
+        for (Iterator<String> iterator = colors.iterator(); iterator.hasNext(); ) {
+            String temp = iterator.next();
+            if (temp.equals(color + "/" + colorName)) {
+                menu.getItem(0).setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.favorite, null)); // Make the icon filled in
+                isFavorite = true;
+                break;
+            }
+        }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent main = new Intent(this, MainActivity.class);
+        this.startActivity(main);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        SharedPreferences.Editor editor = prefs.edit();
 
         if (id == R.id.favorite) {
             if (!isFavorite) { // If the color is not currently a favorite
+                colors.add(color + "/" + colorName);
+                editor.putStringSet("com.techtalk4geeks.ibis.colors", colors);
+                editor.apply();
                 menu.getItem(0).setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.favorite, null)); // Make the icon filled in
                 isFavorite = true;
             } else {
+                for (Iterator<String> iterator = colors.iterator(); iterator.hasNext(); ) {
+                    String temp = iterator.next();
+                    if (temp.equals(color + "/" + colorName)) {
+                        iterator.remove();
+                        break;
+                    }
+                }
+                editor.putStringSet("com.techtalk4geeks.ibis.colors", colors);
+                editor.apply();
                 menu.getItem(0).setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.not_favorite, null));
                 isFavorite = false;
             }
@@ -183,7 +228,7 @@ public class ColorDetailActivity extends AppCompatActivity {
         }
         if (id == R.id.rename) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Description");
+            builder.setTitle("Add Name");
 
             final EditText input = new EditText(this);
             input.setInputType(InputType.TYPE_CLASS_TEXT);

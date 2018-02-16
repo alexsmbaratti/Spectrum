@@ -124,6 +124,8 @@ public class HexFragment extends Fragment {
             Toast.makeText(context, hex + " is not a valid HEX code.", LENGTH_SHORT).show();
             // TODO: Find way to request focus
             return false;
+        } catch (StringIndexOutOfBoundsException e) {
+            return false;
         }
         log(hex + " is a valid HEX code.");
         return true;
