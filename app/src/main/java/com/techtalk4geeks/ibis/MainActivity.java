@@ -19,6 +19,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.Space;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -141,14 +142,20 @@ public class MainActivity extends AppCompatActivity {
 //            ticketList.add(ticket3);
 //            ticketList.add(ticket4);
 //            ticketList.add(collection1);
-
-            try {
-                for (Iterator<String> iterator = colors.iterator(); iterator.hasNext(); ) {
-                    String[] output = iterator.next().split("/");
-                    ticketList.add(new TicketView(this, output[0]));
+            if (colors.size() > 0) {
+                try {
+                    for (Iterator<String> iterator = colors.iterator(); iterator.hasNext(); ) {
+                        String[] output = iterator.next().split("/");
+                        ticketList.add(new TicketView(this, output[0]));
+                    }
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
                 }
-            } catch (NullPointerException e) {
-                e.printStackTrace();
+            } else {
+                TextView explanation = new TextView(this);
+                explanation.setText("Colors you save as favorites will appear here."); // Maybe make this recents and create a separate area for favorites?
+                explanation.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                ticketList.add(explanation);
             }
 
             ticketList.add(space);
