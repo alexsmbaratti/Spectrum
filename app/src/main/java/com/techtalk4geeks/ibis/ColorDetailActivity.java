@@ -207,6 +207,7 @@ public class ColorDetailActivity extends AppCompatActivity {
         if (id == R.id.favorite) {
             if (!isFavorite) { // If the color is not currently a favorite
                 colors.add(color + "/" + colorName);
+                editor.clear();
                 editor.putStringSet("com.techtalk4geeks.ibis.colors", colors);
                 editor.apply();
                 menu.getItem(0).setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.favorite, null)); // Make the icon filled in
@@ -219,6 +220,7 @@ public class ColorDetailActivity extends AppCompatActivity {
                         break;
                     }
                 }
+                editor.clear();
                 editor.putStringSet("com.techtalk4geeks.ibis.colors", colors);
                 editor.apply();
                 menu.getItem(0).setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.not_favorite, null));
